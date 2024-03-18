@@ -4,22 +4,22 @@ Console.WriteLine("Team: 5D\nTester: Kacper Michalec 240751");
 Console.WriteLine("Team: 5D\nDevops (Developer): WeronikaKretowicz240749");
 Console.WriteLine("Team: 5D\nDeveloper: MateuszMagd");
 
-interface IArithmeticsAdd
+interface IArithmeticsAdd   // Piotr Jurek
 {
     double Addition(double a, double b);
 }
 
-interface IArithmeticsDiff
+interface IArithmeticsDiff  // Kacper Michalec
 {
     double Difference(double a, double b);
 }
 
-interface IArithmeticsMult
+interface IArithmeticsMult  // Weronika Kretowicz
 {
     double Multiplication(double a, double b);
 }
 
-interface IArithmeticsDiv
+interface IArithmeticsDiv   // Mateusz Magdziński
 {
     double Division(double a, double b);
 }
