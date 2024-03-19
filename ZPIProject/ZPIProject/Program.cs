@@ -4,6 +4,8 @@ Console.WriteLine("Team: 5D\nTester: Kacper Michalec 240751");
 Console.WriteLine("Team: 5D\nDevops (Developer): WeronikaKretowicz240749");
 Console.WriteLine("Team: 5D\nDeveloper: MateuszMagd");
 
+using System;
+
 interface IArithmeticsAdd   // Piotr Jurek
 {
     double Addition(double a, double b);
@@ -24,7 +26,13 @@ interface IArithmeticsDiv   // Mateusz Magdziński
     double Division(double a, double b);
 }
 
-public class Arithmetics
+public class Arithmetics : IArithmeticsDiv
 {
-
+    public double Division(double a, double b)
+    {
+        if (b == 0)
+            throw new DivideByZeroException();
+        return a / b;
+    }
 }
+
