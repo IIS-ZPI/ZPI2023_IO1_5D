@@ -11,7 +11,7 @@ interface IArithmeticsAdd   // Piotr Jurek
     double Addition(double a, double b);
 }
 
-interface IArithmeticsDiff  // Kacper Michalec
+interface IArithmeticsDiff  // Kacper Michalec, to ja!
 {
     double Difference(double a, double b);
 }
@@ -26,7 +26,7 @@ interface IArithmeticsDiv   // Mateusz Magdziński
     double Division(double a, double b);
 }
 
-public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv
+public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv, IArithmeticsDiff
 {
     public double Addition(double a, double b)
     {
@@ -39,6 +39,11 @@ public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv
             throw new DivideByZeroException();
             
         return a / b;
+    }
+
+    public double Difference(double a, double b)
+    {
+        return a - b;
     }
 }
 
