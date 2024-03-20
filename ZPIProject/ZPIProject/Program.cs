@@ -4,6 +4,9 @@ Console.WriteLine("Team: 5D\nTester: Kacper Michalec 240751");
 Console.WriteLine("Team: 5D\nDevops (Developer): WeronikaKretowicz240749");
 Console.WriteLine("Team: 5D\nDeveloper: MateuszMagd");
 
+// lab1_zad5_240751 comment1
+// lab1_zad5_240751 comment2
+// lab1_zad5_240751 comment3
 interface IArithmeticsAdd   // Piotr Jurek
 {
     double Addition(double a, double b);
