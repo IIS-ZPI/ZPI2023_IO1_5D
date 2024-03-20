@@ -22,7 +22,7 @@ interface IArithmeticsMult  // Weronika Kretowicz
     double Multiplication(double a, double b);
 }
 
-interface IArithmeticsDiv   // Mateusz Magdziński
+interface IArithmeticsDiv   // Mateusz Magdziński lab1_zad5_240693 And that's not me :(
 {
     double Division(double a, double b);
 }
