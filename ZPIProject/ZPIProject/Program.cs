@@ -23,7 +23,9 @@ interface IArithmeticsDiv   // Mateusz Magdziński
 {
     double Division(double a, double b);
 }
-
+// lab1_zad5_240751 comment4
+// lab1_zad5_240751 comment5
+// lab1_zad5_240751 comment6
 public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv, IArithmeticsDiff
 {
     public double Addition(double a, double b)
