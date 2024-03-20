@@ -1,5 +1,4 @@
-﻿// Unnecessary comment
-Console.WriteLine("Team: 5D\nSCRUM Master (Developer): JakubMatuszak240749");
+﻿Console.WriteLine("Team: 5D\nSCRUM Master (Developer): JakubMatuszak240749");
 Console.WriteLine("Team: 5D\nDeveloper: PiotrJurek240693"); // lab1_zad5_240693 It's me! :)
 Console.WriteLine("Team: 5D\nTester: Kacper Michalec 240751");
 Console.WriteLine("Team: 5D\nDevops (Developer): WeronikaKretowicz235903");
