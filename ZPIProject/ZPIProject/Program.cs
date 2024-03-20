@@ -44,4 +44,6 @@ public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv, IArithmeticsDiff
         return a - b;
     }
 }
-
+// lab1_zad5_240751 comment7
+// lab1_zad5_240751 comment8
+// lab1_zad5_240751 comment9
