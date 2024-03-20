@@ -1,7 +1,7 @@
 ﻿Console.WriteLine("Team: 5D\nSCRUM Master (Developer): JakubMatuszak240749");
 Console.WriteLine("Team: 5D\nDeveloper: PiotrJurek240693");
 Console.WriteLine("Team: 5D\nTester: Kacper Michalec 240751");
-Console.WriteLine("Team: 5D\nDevops (Developer): WeronikaKretowicz240749");
+Console.WriteLine("Team: 5D\nDevops (Developer): WeronikaKretowicz235903");
 Console.WriteLine("Team: 5D\nDeveloper: MateuszMagd");
 
 interface IArithmeticsAdd   // Piotr Jurek
@@ -24,7 +24,7 @@ interface IArithmeticsDiv   // Mateusz Magdziński
     double Division(double a, double b);
 }
 
-public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv, IArithmeticsDiff
+public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv, IArithmeticsDiff, IArithmeticsMult
 {
     public double Addition(double a, double b)
     {
@@ -42,6 +42,11 @@ public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv, IArithmeticsDiff
     public double Difference(double a, double b)
     {
         return a - b;
+    }
+
+    public double Multiplication(double a, double b)
+    {
+        return a * b;
     }
 }
 
