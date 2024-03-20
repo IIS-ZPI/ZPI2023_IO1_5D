@@ -7,7 +7,7 @@ Console.WriteLine("Team: 5D\nDeveloper: MateuszMagd");
 // lab1_zad5_240751 comment1
 // lab1_zad5_240751 comment2
 // lab1_zad5_240751 comment3
-interface IArithmeticsAdd   // Piotr Jurek
+interface IArithmeticsAdd   // Piotr Jurek lab1_zad5_240693 It's me again!!! :)
 {
     double Addition(double a, double b);
 }
@@ -22,7 +22,7 @@ interface IArithmeticsMult  // Weronika Kretowicz
     double Multiplication(double a, double b);
 }
 
-interface IArithmeticsDiv   // Mateusz Magdziński
+interface IArithmeticsDiv   // Mateusz Magdziński lab1_zad5_240693 And that's not me :(
 {
     double Division(double a, double b);
 }
