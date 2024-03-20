@@ -18,10 +18,11 @@ interface IArithmeticsMult  // Weronika Kretowicz
 {
     double Multiplication(double a, double b);
 }
-
+// lab1_zad5_comment7
 interface IArithmeticsDiv   // Mateusz Magdziński
-{
+{// lab1_zad5_comment8
     double Division(double a, double b);
+    // lab1_zad5_comment9
 }
 
 public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv, IArithmeticsDiff, IArithmeticsMult
