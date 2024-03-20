@@ -58,4 +58,3 @@ public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv, IArithmeticsDiff, I
 // lab1_zad5_240751 comment7
 // lab1_zad5_240751 comment8
 // lab1_zad5_240751 comment9
-// lab1_zad6_240751 comment for task 6.
