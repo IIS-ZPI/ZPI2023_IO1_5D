@@ -1,6 +1,8 @@
-﻿Console.WriteLine("Team: 5D\nSCRUM Master (Developer): JakubMatuszak240749");
+﻿// lab1_zad5_comment1
 Console.WriteLine("Team: 5D\nDeveloper: PiotrJurek240693");
+// lab1_zad5_comment2
 Console.WriteLine("Team: 5D\nTester: Kacper Michalec 240751");
+// lab1_zad5_comment3
 Console.WriteLine("Team: 5D\nDevops (Developer): WeronikaKretowicz235903");
 Console.WriteLine("Team: 5D\nDeveloper: MateuszMagd");
 
