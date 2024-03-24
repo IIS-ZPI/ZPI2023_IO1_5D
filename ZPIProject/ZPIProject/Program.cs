@@ -3,7 +3,7 @@ Console.WriteLine("Team: 5D\nDeveloper: PiotrJurek240693"); // lab1_zad5_240693 
 Console.WriteLine("Team: 5D\nTester: Kacper Michalec 240751");
 Console.WriteLine("Team: 5D\nDevops (Developer): WeronikaKretowicz235903");
 Console.WriteLine("Team: 5D\nDeveloper: MateuszMagd");
-
+// Comment that i dont want :(
 // lab1_zad5_240751 comment1
 // lab1_zad5_240751 comment2
 // lab1_zad5_240751 comment3
