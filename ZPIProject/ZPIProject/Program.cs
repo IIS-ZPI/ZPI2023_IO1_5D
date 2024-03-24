@@ -12,6 +12,7 @@ interface IArithmeticsAdd   // Piotr Jurek lab1_zad5_240693 It's me again!!! :)
     double Addition(double a, double b);
 }
 
+// lab1_zad5_240742 third comment
 interface IArithmeticsDiff  // Kacper Michalec, to ja!
 {
     double Difference(double a, double b);
