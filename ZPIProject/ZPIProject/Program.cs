@@ -21,8 +21,8 @@ interface IArithmeticsDiff  // Kacper Michalec, to ja!
 // lab1_zad5_240742 second comment
 interface IArithmeticsMult  // Weronika Kretowicz
 {
+    //comm1
     double Multiplication(double a, double b);
-
     //comm3
 }
 
