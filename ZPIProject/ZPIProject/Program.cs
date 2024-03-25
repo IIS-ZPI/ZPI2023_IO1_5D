@@ -23,6 +23,7 @@ interface IArithmeticsMult  // Weronika Kretowicz
 {
     //comm1
     double Multiplication(double a, double b);
+    //comm2
     //comm3
 }
 
