@@ -61,7 +61,6 @@ public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv, IArithmeticsDiff, I
         return a * b;
     }
 }
-// lab1_zad6_240749 comment test
 // lab1_zad5_240751 comment7
 // lab1_zad5_240751 comment8
 // lab1_zad5_240751 comment9
