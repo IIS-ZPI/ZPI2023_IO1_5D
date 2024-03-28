@@ -17,6 +17,7 @@ interface IArithmeticsDiff  // Kacper Michalec, to ja!
 {
     double Difference(double a, double b);
 }
+// lab1_zad5_240749 first comment
 
 // lab1_zad5_240742 second comment
 interface IArithmeticsMult  // Weronika Kretowicz
@@ -32,6 +33,8 @@ interface IArithmeticsDiv   // Mateusz Magdziński lab1_zad5_240693 And that's n
 {
     double Division(double a, double b);
 }
+
+// lab1_zad5_240749 comment second
 
 // lab1_zad5_240751 comment4
 // lab1_zad5_240751 comment5
@@ -50,6 +53,7 @@ public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv, IArithmeticsDiff, I
             
         return a / b;
     }
+    // lab1_zad5_240749 third comment
 
     public double Difference(double a, double b)
     {
