@@ -33,6 +33,8 @@ interface IArithmeticsDiv   // Mateusz Magdziński lab1_zad5_240693 And that's n
     double Division(double a, double b);
 }
 
+// lab1_zad5_240749 comment second
+
 // lab1_zad5_240751 comment4
 // lab1_zad5_240751 comment5
 // lab1_zad5_240751 comment6
