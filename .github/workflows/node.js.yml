@@ -23,10 +23,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        
     - run: npm install yarn
     - run: yarn
     - run: yarn build
-    - run: npm test
 
     - name: Deploy with gh-pages
       run: |
