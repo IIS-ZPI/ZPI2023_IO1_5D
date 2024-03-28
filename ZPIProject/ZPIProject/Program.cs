@@ -50,6 +50,7 @@ public class Arithmetics : IArithmeticsAdd, IArithmeticsDiv, IArithmeticsDiff, I
             
         return a / b;
     }
+    // lab1_zad5_240749 third comment
 
     public double Difference(double a, double b)
     {
