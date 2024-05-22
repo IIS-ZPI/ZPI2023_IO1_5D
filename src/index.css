@@ -1,3 +1,95 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #333;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  background-color: white;
+  color: #5a3f99;
+  padding: 10px;
+  text-align: left;
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  flex: 1;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar ul li a svg {
+  margin-right: 10px;
+}
+
+.sidebar ul li.active a {
+  font-weight: bold;
+  color: #5a3f99;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+.page-content {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+h2 {
+  margin: 10px;
+}
+
+select {
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+}
