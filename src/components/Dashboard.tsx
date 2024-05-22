@@ -2,7 +2,7 @@ import React from 'react';
 import { useCurrency } from '../contexts/CurrencyContext';
 
 const Dashboard: React.FC = () => {
-  const { selectedCurrency, setSelectedCurrency } = useCurrency();
+  const { selectedCurrency, setSelectedCurrency, currencies, loading } = useCurrency();
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCurrency(e.target.value);
@@ -11,13 +11,17 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <h2>Select currency</h2>
-      <select value={selectedCurrency} onChange={handleCurrencyChange}>
-        <option value="USD">USD - US Dollar</option>
-        <option value="CAD">CAD - Canadian Dollar</option>
-        <option value="EUR">EUR - Euro</option>
-        <option value="GBP">GBP - British Pound</option>
-        <option value="NZD">NZD - New Zealand Dollar</option>
-      </select>
+      {loading ? (
+        <p>Loading currencies...</p>
+      ) : (
+        <select value={selectedCurrency} onChange={handleCurrencyChange}>
+          {currencies.map((currency) => (
+            <option key={currency.code} value={currency.code}>
+              {currency.code} - {currency.name}
+            </option>
+          ))}
+        </select>
+      )}
     </>
   );
 };
