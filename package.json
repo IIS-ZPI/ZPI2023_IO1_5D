@@ -16,6 +16,7 @@
     "@types/react-datepicker": "^6.2.0",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
+    "classnames": "^2.5.1",
     "eslint-plugin-react": "^7.34.1",
     "gh-pages": "^6.1.1",
     "react": "^18.2.0",
@@ -45,3 +46,5 @@
     "vite": "^5.2.0"
   }
 }
+
+
