@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
+import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 
 interface Currency {
   code: string;
@@ -32,7 +32,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
           code: rate.code,
           name: rate.currency
         }));
-        setCurrencies([{ code: 'PLN', name: 'Polish Zloty' }, ...currencyData]);
+        setCurrencies([{ code: 'PLN', name: 'Polski złoty' }, ...currencyData]);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching currencies:', error);
