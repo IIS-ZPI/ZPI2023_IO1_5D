@@ -14,11 +14,37 @@ const StatisticalMeasures: React.FC = () => {
   const [statistics, setStatistics] = useState<Statistics | null>(null);
   const [loading, setLoading] = useState(false);
 
+
+  const getDefaultStartingDate = () => {
+    const today = new Date();
+    const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
+
+    const year = lastMonth.getFullYear();
+    const month = String(lastMonth.getMonth() + 1).padStart(2, '0');
+    const day = String(lastMonth.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  };
+
+  const getDefaultEndDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  };
+
+
+  const [startingDate, setStartingDate] = useState(getDefaultStartingDate);
+  const [endDate, setEndDate] = useState(getDefaultEndDate);
+
+
   useEffect(() => {
     const fetchStatistics = async () => {
       setLoading(true);
       try {
-        const stats = await getStatistics(selectedCurrency, '2023-01-01', '2023-12-31');
+        const stats = await getStatistics(selectedCurrency, startingDate, endDate);
         setStatistics(stats);
       } catch (error) {
         console.error('Error fetching statistics:', error);
@@ -38,17 +64,24 @@ const StatisticalMeasures: React.FC = () => {
     return <p>No statistical data available.</p>;
   }
 
+  if(startingDate == null){
+    setStartingDate(getDefaultStartingDate);
+  }
+
   return (
     <div className='size-fit'>
       <Header
         currency={selectedCurrency}
-        startingDate='2023-01-01'
-        timePeriod='2023-12-31'>
+        startingDate={startingDate}
+        endDate={endDate}>
       </Header> 
       <div className="flex justify-between mb-8">
         <CurrencyDropdown/>
         <div className="flex">
-          <StartDateDropdown />
+          <StartDateDropdown
+            setStartingDate={setStartingDate}
+            getDefaultStartingDate={getDefaultStartingDate}>
+          </StartDateDropdown>
           <TimePeriodDropdown />
         </div>
       </div>
