@@ -40,7 +40,11 @@ const StatisticalMeasures: React.FC = () => {
 
   return (
     <div className='size-fit'>
-      <Header />
+      <Header
+        currency={selectedCurrency}
+        startingDate='2023-01-01'
+        timePeriod='2023-12-31'>
+      </Header> 
       <div className="flex justify-between mb-8">
         <CurrencyDropdown/>
         <div className="flex">
@@ -52,7 +56,7 @@ const StatisticalMeasures: React.FC = () => {
         mode={statistics.mode}
         median={statistics.median}
         standardDeviation={statistics.standardDeviation}
-        coefficientOfVariation={statistics.mode}>
+        coefficientOfVariation={statistics.coefficientOfVariation}>
       </ParameterTable>
     </div>
   );
