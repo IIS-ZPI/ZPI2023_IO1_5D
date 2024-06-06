@@ -11,6 +11,7 @@ interface CurrencyContextProps {
   setSelectedCurrency: (currency: string) => void;
   currencies: Currency[];
   loading: boolean;
+  setLoading: (state: boolean) => void;
 }
 
 interface CurrencyProviderProps {
@@ -44,7 +45,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
   }, []);
 
   return (
-    <CurrencyContext.Provider value={{ selectedCurrency, setSelectedCurrency, currencies, loading }}>
+    <CurrencyContext.Provider value={{ selectedCurrency, setSelectedCurrency, currencies, loading, setLoading }}>
       {children}
     </CurrencyContext.Provider>
   );
