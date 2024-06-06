@@ -1,10 +1,6 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #fff;
-  color: #333;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilites;
 
 .app {
   display: flex;
