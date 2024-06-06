@@ -8,8 +8,8 @@ export default function Page() {
     const { selectedCurrency, currencies, loading } = useCurrency();
     const { getExchangeRate } = useExchangeRate();
     const [currency2, setCurrency2] = useState("USD");
-    const [startDate, setStartDate] = useState("2000-10-01");
-    const [endDate, setEndDate] = useState("2000-12-10");
+    const [startDate, setStartDate] = useState("2023-10-01");
+    const [endDate, setEndDate] = useState("2023-12-10");
     const [exchangeRates, setExchangeRates] = useState<number[]>([]);
 
     const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
