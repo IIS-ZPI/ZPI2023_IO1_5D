@@ -1,5 +1,5 @@
-import React, { createContext, useContext, ReactNode } from 'react';
 import axios from 'axios';
+import React, { ReactNode, createContext, useContext } from 'react';
 
 export interface StatisticsContextProps {
   getStatistics: (currency: string, startDate: string, endDate: string) => Promise<Statistics>;

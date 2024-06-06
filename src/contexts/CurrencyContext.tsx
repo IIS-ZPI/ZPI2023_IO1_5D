@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
+import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 
 interface Currency {
   code: string;
@@ -11,6 +11,7 @@ interface CurrencyContextProps {
   setSelectedCurrency: (currency: string) => void;
   currencies: Currency[];
   loading: boolean;
+  setLoading: (state: boolean) => void;
 }
 
 interface CurrencyProviderProps {
@@ -32,7 +33,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
           code: rate.code,
           name: rate.currency
         }));
-        setCurrencies([{ code: 'PLN', name: 'Polish Zloty' }, ...currencyData]);
+        setCurrencies([{ code: 'PLN', name: 'Polski złoty' }, ...currencyData]);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching currencies:', error);
@@ -44,7 +45,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
   }, []);
 
   return (
-    <CurrencyContext.Provider value={{ selectedCurrency, setSelectedCurrency, currencies, loading }}>
+    <CurrencyContext.Provider value={{ selectedCurrency, setSelectedCurrency, currencies, loading, setLoading }}>
       {children}
     </CurrencyContext.Provider>
   );
