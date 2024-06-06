@@ -1,0 +1,13 @@
+.contener {
+    width: 100%;
+    display: flex;
+}
+
+.secondCurrency {
+    margin-right: 2em;
+    width: 50%;
+}
+
+.flex {
+    display: flex;
+}
