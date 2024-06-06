@@ -18,13 +18,31 @@ export default function Page() {
     };
 
     const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setStartDate(e.target.value);
-        updateExchangeRate();
+        const newStartDate = new Date(e.target.value);
+        const minDate = new Date("2002-01-02");
+        const oldEndDate = new Date(endDate); 
+        const diffInDays = (oldEndDate.getTime() - newStartDate.getTime()) / (1000 * 3600 * 24);
+        if (newStartDate > minDate && diffInDays <= 365 && oldEndDate > newStartDate) {
+            setStartDate(e.target.value);
+            updateExchangeRate();
+        } else {
+            console.log("Start date must be after January 2, 2002. Start date have to be less then EndDate. Start date have to be in range 365 of end date");
+        }
     };
 
     const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEndDate(e.target.value);
-        updateExchangeRate();
+        const newEndDate = new Date(e.target.value);
+        const start = new Date(startDate);
+        const minDate = new Date("2002-01-03");
+        const diffInDays = (newEndDate.getTime() - start.getTime()) / (1000 * 3600 * 24);
+        console.log(newEndDate, start, minDate, diffInDays);
+        if (diffInDays <= 365 && minDate < newEndDate && newEndDate > start) {
+            setEndDate(e.target.value);
+            updateExchangeRate();
+        } else {
+            console.log("The date range must be no more than 365 days. Can't be less 2002-01-03. End date can't be less then start date.");
+        }
+        
     };
 
     const updateExchangeRate = async () => {
