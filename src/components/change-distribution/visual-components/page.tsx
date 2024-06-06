@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { useCurrency } from "../../../contexts/CurrencyContext"
-import { useExchangeRate } from '../../../contexts/ExchangeRateContext';
-import "./page.css"
-
-
+import { useCurrency } from "../../../contexts/CurrencyContext";
+import { useExchangeRate } from "../../../contexts/ExchangeRateContext";
+import "./page.css";
+import ChartComponent from './chart';
 
 export default function Page() {
     const { selectedCurrency, currencies, loading } = useCurrency();
     const { getExchangeRate } = useExchangeRate();
     const [currency2, setCurrency2] = useState("USD");
     const [startDate, setStartDate] = useState("2000-10-01");
-    const [endDate, setEndDate] = useState("2010-12-10");
+    const [endDate, setEndDate] = useState("2000-12-10");
+    const [exchangeRates, setExchangeRates] = useState<number[]>([]);
 
     const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrency2(e.target.value);
@@ -26,24 +26,21 @@ export default function Page() {
         setEndDate(e.target.value);
         updateExchangeRate();
     };
-    
+
     const updateExchangeRate = async () => {
         try {
-            const cos = await getExchangeRate(selectedCurrency, currency2, startDate, endDate);
-            console.log(cos);
-            
-            cos.forEach((rate, index) => {
-                console.log(`Rate ${index + 1}: ${rate}`);
+            console.log("Fetching exchange rates with params:", {
+                selectedCurrency,
+                currency2,
+                startDate,
+                endDate,
             });
-
-
-            if (cos.length > 0) {
-                console.log(`First rate: ${cos[0]}`);
-            }
+            const rates = await getExchangeRate(selectedCurrency, currency2, startDate, endDate);
+            setExchangeRates(rates);
         } catch (error) {
             console.error("Error fetching exchange rates:", error);
         }
-    }
+    };
 
     return (
         <div>
@@ -52,15 +49,15 @@ export default function Page() {
                 <div className="secondCurrency">
                     <p>Select second currency, now is: {currency2}</p>
                     {loading ? (
-                    <p>Loading currencies...</p>
+                        <p>Loading currencies...</p>
                     ) : (
-                    <select value={currency2} onChange={handleCurrencyChange}>
-                        {currencies.map((currency) => (
-                        <option key={currency.code} value={currency.code}>
-                            {currency.code} - {currency.name}
-                        </option>
-                        ))}
-                    </select>
+                        <select value={currency2} onChange={handleCurrencyChange}>
+                            {currencies.map((currency) => (
+                                <option key={currency.code} value={currency.code}>
+                                    {currency.code} - {currency.name}
+                                </option>
+                            ))}
+                        </select>
                     )}
                 </div>
                 <div className="mb-4">
@@ -89,6 +86,13 @@ export default function Page() {
                     </div>
                 </div>
             </div>
+            <div>
+                <ChartComponent
+                    selectedCurrency={selectedCurrency}
+                    currency2={currency2}
+                    exchangeRates={exchangeRates}
+                />
+                </div>
         </div>
-    )
+    );
 }
