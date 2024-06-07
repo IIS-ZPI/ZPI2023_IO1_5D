@@ -246,10 +246,18 @@ const StatisticalMeasures: React.FC = () => {
         <div>
           <h2 className="text-2xl font-bold">Parameters</h2>
           <div className="ps-1 mt-4 font-medium text-md">
-            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Mode:</p>
-            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Median:</p>
-            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Standard deviation:</p>
-            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Coefficient of variation:</p>
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">
+              Mode:
+            </p>
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">
+              Median:
+            </p>
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">
+              Standard deviation:
+            </p>
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">
+              Coefficient of variation:
+            </p>
           </div>
         </div>
         <div>
@@ -271,13 +279,15 @@ const StatisticalMeasures: React.FC = () => {
               type="text"
               readOnly
               className="mb-2 py-1 px-2 block rounded-lg border border-gray_for_text w-1/2"
-              value={statistics ? statistics.standardDeviation : 0}
+              value={statistics ? statistics.standardDeviation.toFixed(8) : 0}
             />
             <input
               type="text"
               readOnly
               className="mb-2 py-1 px-2 block rounded-lg border border-gray_for_text w-1/2"
-              value={statistics ? statistics.coefficientOfVariation : 0}
+              value={
+                statistics ? statistics.coefficientOfVariation.toFixed(8) : 0
+              }
             />
           </div>
         </div>
