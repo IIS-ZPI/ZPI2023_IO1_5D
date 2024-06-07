@@ -29,7 +29,7 @@ const App: React.FC = () => {
                       alt="Flags"
                     />
                   </div>
-                  <div className="w-fit m-0">
+                  <div className="w-full m-0">
                     <Routes>
                       <Route path="/" element={<Dashboard />} />
                       <Route

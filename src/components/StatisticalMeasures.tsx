@@ -138,18 +138,18 @@ const StatisticalMeasures: React.FC = () => {
   }
 
   return (
-    <div className="w-full">
-      <div className="flex justify-between items-center mb-8 border-b border-gray_for_text">
+    <div className="w-fill m-16">
+      <div className="flex justify-between items-center mb-4 border-b-2 border-gray_for_text px-4">
         <h1 className="text-3xl font-bold">{selectedCurrency}</h1>
         <div className="text-xl font-bold">
           {startingDate} - {endDate}
         </div>
       </div>
-      <div className="flex mb-8">
+      <div className="flex mb-16 justify-between">
         <div className="relative w-64">
           <label
             htmlFor="currency"
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-black text-xs font-bold mb-2"
           >
             Currency
           </label>
@@ -160,7 +160,7 @@ const StatisticalMeasures: React.FC = () => {
               <>
                 <select
                   id="currency"
-                  className="h-10 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                  className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
                   value={selectedCurrency}
                   onChange={handleCurrencyChange}
                 >
@@ -183,97 +183,100 @@ const StatisticalMeasures: React.FC = () => {
             )}
           </div>
         </div>
-        <div className="flex">
-          <div className="relative w-64">
-            <label
-              htmlFor="start-date"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Starting date
-            </label>
-            <input
-              type="date"
-              className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-              onChange={handleStartingDateChange}
-              placeholder="Select a date"
-              value={isStartingDateSelected ? startingDate : ""}
-              max={getMaxDate()}
-            />
-          </div>
-          <div className="relative w-64 pl-3">
-            <label
-              htmlFor="time-period"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Time period
-            </label>
-            <div className="relative">
-              <select
-                className="h-10 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                onChange={handleTimePeriodChange}
-                value={isTimePeriodSelected ? timePeriod : "Switch period"}
+
+        <div>
+          <div className="flex">
+            <div className="relative w-40">
+              <label
+                htmlFor="start-date"
+                className="block text-gray-700 text-xs font-bold mb-2"
               >
-                <option disabled selected hidden>
-                  Switch period
-                </option>
-                <option value="7 days" disabled={!daysDifference(7)}>
-                  7 days
-                </option>
-                <option value="30 days" disabled={!daysDifference(30)}>
-                  30 days
-                </option>
-                <option value="90 days" disabled={!daysDifference(90)}>
-                  90 days
-                </option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg
-                  className="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
+                Starting date
+              </label>
+              <input
+                type="date"
+                className="block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
+                onChange={handleStartingDateChange}
+                placeholder="Select a date"
+                value={isStartingDateSelected ? startingDate : ""}
+                max={getMaxDate()}
+              />
+            </div>
+            <div className="relative w-40 pl-3">
+              <label
+                htmlFor="time-period"
+                className="block text-gray-700 text-xs font-bold mb-2"
+              >
+                Time period
+              </label>
+              <div className="relative">
+                <select
+                  className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={handleTimePeriodChange}
+                  value={isTimePeriodSelected ? timePeriod : "Switch period"}
                 >
-                  <path d="M7 10l5 5 5-5H7z" />
-                </svg>
+                  <option disabled selected hidden>
+                    Switch period
+                  </option>
+                  <option value="7 days" disabled={!daysDifference(7)}>
+                    7 days
+                  </option>
+                  <option value="30 days" disabled={!daysDifference(30)}>
+                    30 days
+                  </option>
+                  <option value="90 days" disabled={!daysDifference(90)}>
+                    90 days
+                  </option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M7 10l5 5 5-5H7z" />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 w-fit">
         <div>
           <h2 className="text-2xl font-bold">Parameters</h2>
-          <div className="mt-4 font-medium text-xl">
-            <p className="mb-2">Mode:</p>
-            <p className="mb-2">Median:</p>
-            <p className="mb-2">Standard deviation:</p>
-            <p className="mb-2">Coefficient of variation:</p>
+          <div className="ps-1 mt-4 font-medium text-md">
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Mode:</p>
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Median:</p>
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Standard deviation:</p>
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Coefficient of variation:</p>
           </div>
         </div>
         <div>
           <h2 className="text-2xl font-bold">Values</h2>
-          <div className="mt-4 font-medium text-xl">
+          <div className="mt-4 font-medium text-md">
             <input
               type="text"
               readOnly
-              className="mb-2 block rounded border border-gray-300 auto-width-input"
+              className="mb-2 py-1 px-2 block rounded-lg border border-gray_for_text w-1/2"
               value={statistics ? statistics.mode : 0}
             />
             <input
               type="text"
               readOnly
-              className="mb-2 block rounded border border-gray-300 auto-width-input"
+              className="mb-2 py-1 px-2 block rounded-lg border border-gray_for_text w-1/2"
               value={statistics ? statistics.median : 0}
             />
             <input
               type="text"
               readOnly
-              className="mb-2 block rounded border border-gray-300 auto-width-input"
+              className="mb-2 py-1 px-2 block rounded-lg border border-gray_for_text w-1/2"
               value={statistics ? statistics.standardDeviation : 0}
             />
             <input
               type="text"
               readOnly
-              className="mb-2 block rounded border border-gray-300 auto-width-input"
+              className="mb-2 py-1 px-2 block rounded-lg border border-gray_for_text w-1/2"
               value={statistics ? statistics.coefficientOfVariation : 0}
             />
           </div>
