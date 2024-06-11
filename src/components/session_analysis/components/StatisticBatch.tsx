@@ -1,10 +1,12 @@
 import { HiArrowDown, HiArrowUp, HiMinus } from 'react-icons/hi'
 import classnames from 'classnames'
+import { Spinner } from '@material-tailwind/react'
 
 export type StatisticBatchProps = {
     icon: 'arrowUp' | 'arrowDown' | 'minus'
     text: 'Growth periods' | 'Slack periods' | 'Unchanged periods'
     value: number
+    loading: boolean
     className?: string
 }
 
@@ -19,6 +21,7 @@ export const StatisticBatch = ({
     text,
     value,
     className,
+    loading,
 }: StatisticBatchProps) => {
     const SelectedIcon = IconComponent[icon]
 
@@ -40,7 +43,14 @@ export const StatisticBatch = ({
                     {text}
                 </p>
                 <div className="flex justify-center w-full flex-grow">
-                    <span className="font-bold text-sm">{value}</span>
+                    {loading ? (
+                        <Spinner
+                            onPointerEnterCapture={undefined}
+                            onPointerLeaveCapture={undefined}
+                        />
+                    ) : (
+                        <span className="font-bold text-sm">{value}</span>
+                    )}
                 </div>
             </div>
         </div>
