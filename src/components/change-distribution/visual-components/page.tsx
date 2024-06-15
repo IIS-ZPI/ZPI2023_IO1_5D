@@ -6,7 +6,7 @@ import ChartComponent from './chart';
 import img from '../../../assets/c-right.svg'
 
 export default function Page() {
-    const { selectedCurrency, currencies, loading } = useCurrency();
+    const { selectedCurrency, setSelectedCurrency, currencies, loading } = useCurrency();
     const { getExchangeRate } = useExchangeRate();
     const [currency2, setCurrency2] = useState("USD");
     const [startDate, setStartDate] = useState("2023-10-01");
@@ -14,6 +14,11 @@ export default function Page() {
     const [exchangeRates, setExchangeRates] = useState<number[]>([]);
 
     const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedCurrency(e.target.value);
+        updateExchangeRate();
+    };
+
+    const handleCurrency2Change = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrency2(e.target.value);
         updateExchangeRate();
     };
@@ -81,9 +86,10 @@ export default function Page() {
                 {loading ? (
                     <p>Loading currencies...</p>
                 ) : (
-                    <select value={selectedCurrency} onChange={handleCurrencyChange}>
+                    <select className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
+                    value={selectedCurrency} aria-placeholder="Change currency" onChange={handleCurrencyChange}>
                     {currencies.map((currency) => (
-                        <option key={currency.code} value={currency.code}>
+                        <option className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"  key={currency.code} value={currency.code}>
                         {currency.code} - {currency.name}
                         </option>
                     ))}
@@ -94,9 +100,10 @@ export default function Page() {
                     {loading ? (
                         <p>Loading currencies...</p>
                     ) : (
-                        <select value={currency2} onChange={handleCurrencyChange}>
+                        <select className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
+                        value={currency2} onChange={handleCurrency2Change}>
                             {currencies.map((currency) => (
-                                <option key={currency.code} value={currency.code}>
+                                <option className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700" key={currency.code} value={currency.code}>
                                     {currency.code} - {currency.name}
                                 </option>
                             ))}
