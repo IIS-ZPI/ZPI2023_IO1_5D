@@ -8,7 +8,7 @@ import img from '../../../assets/c-right.svg'
 export default function Page() {
     const { selectedCurrency, setSelectedCurrency, currencies, loading } = useCurrency();
     const { getExchangeRate } = useExchangeRate();
-    const [currency2, setCurrency2] = useState("USD");
+    const [currency2, setCurrency2] = useState("EUR");
     const [startDate, setStartDate] = useState("2023-10-01");
     const [endDate, setEndDate] = useState("2023-12-10");
     const [exchangeRates, setExchangeRates] = useState<number[]>([]);
@@ -83,46 +83,52 @@ export default function Page() {
             <div className="contener">
                 {/* Currencies changes */}
                 <div className="flex w-1/2">
-                    <div className="w-48">
-                    {loading ? (
-                        <p>Loading currencies...</p>
-                    ) : (
-                        <select className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
-                        value={selectedCurrency} aria-placeholder="Change currency" onChange={handleCurrencyChange}>
-                        {currencies.map((currency) => (
-                            <option className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"  key={currency.code} value={currency.code}>
-                            {currency.code} - {currency.name}
-                            </option>
-                        ))}
-                        </select>
-                    )}
-                    </div>
-                    <div className="secondCurrency w-48">
+                    <div>
+                        <label className="text-xs font-bold">From</label>
+                        <div className="w-32">
                         {loading ? (
                             <p>Loading currencies...</p>
                         ) : (
-                            <select className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline "
-                            value={currency2} onChange={handleCurrency2Change}>
-                                {currencies.map((currency) => (
-                                    <option className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700" key={currency.code} value={currency.code}>
-                                        {currency.code} - {currency.name}
-                                    </option>
-                                ))}
+                            <select className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
+                            value={selectedCurrency} onChange={handleCurrencyChange}>
+                            {currencies.map((currency) => (
+                                <option className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"  key={currency.code} value={currency.code}>
+                                {currency.code} - {currency.name}
+                                </option>
+                            ))}
                             </select>
                         )}
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-xs font-bold">To</label>
+                        <div className="w-32">
+                            {loading ? (
+                                <p>Loading currencies...</p>
+                            ) : (
+                                <select className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline "
+                                value={currency2} onChange={handleCurrency2Change}>
+                                    {currencies.map((currency) => (
+                                        <option className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700" key={currency.code} value={currency.code}>
+                                            {currency.code} - {currency.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                        </div>
                     </div>
                 </div>
                 {/* Date changes */}
-                <div className="mb-4 w-1/2 content-end">
-                    <div className="flex content-end w-full bg-green">
-                        <div>
+                <div className="mb-4 w-1/2 flex justify-end">
+                    <div className="flex space-x-4 w-full justify-end">
+                        <div className="">
                             <label htmlFor="startDate" className="">Starting date</label>
                             <input
                                 type="date"
                                 id="startDate"
                                 value={startDate}
                                 onChange={handleStartDateChange}
-                                className=""
+                                className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Start Date"
                             />
                         </div>
@@ -133,7 +139,7 @@ export default function Page() {
                                 id="endDate"
                                 value={endDate}
                                 onChange={handleEndDateChange}
-                                className=""
+                                className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
                             />
                         </div>
                     </div>
