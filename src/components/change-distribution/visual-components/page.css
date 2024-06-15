@@ -11,3 +11,11 @@
 .flex {
     display: flex;
 }
+
+.hr-color {
+    border: none;
+    border-top: 1px solid #A7ADB3;
+    color: #A7ADB3;
+    background-color: #A7ADB3;
+    height: 1px;
+}

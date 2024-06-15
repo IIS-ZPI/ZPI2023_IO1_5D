@@ -53,7 +53,7 @@ class ChartComponent extends Component<Props> {
     const ctx = this.chartRef.current!.getContext("2d");
     if (!ctx) return;
 
-    const { exchangeRates, selectedCurrency, currency2 } = this.props;
+    const { exchangeRates} = this.props;
     const { labels, frequencies } = this.calculateDifferences(exchangeRates);
 
     this.chart = new Chart(ctx, {
@@ -62,26 +62,31 @@ class ChartComponent extends Component<Props> {
         labels,
         datasets: [
           {
-            label: `Frequency of Differences in Exchange Rate (${selectedCurrency} to ${currency2})`,
+            label: ``,
             data: frequencies,
             backgroundColor: "rgba(54, 162, 235, 0.6)",
             borderColor: "rgba(54, 162, 235, 1)",
-            borderWidth: 1,
+            borderWidth: 0,
           },
         ],
       },
       options: {
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
         scales: {
           y: {
             beginAtZero: true,
             title: {
-              display: true,
+              display: false,
               text: 'Frequency',
             },
           },
           x: {
             title: {
-              display: true,
+              display: false,
               text: 'Difference',
             },
           },

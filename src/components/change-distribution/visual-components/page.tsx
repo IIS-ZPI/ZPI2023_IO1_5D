@@ -3,6 +3,7 @@ import { useCurrency } from "../../../contexts/CurrencyContext";
 import { useExchangeRate } from "../../../contexts/ExchangeRateContext";
 import "./page.css";
 import ChartComponent from './chart';
+import img from '../../../assets/c-right.svg'
 
 export default function Page() {
     const { selectedCurrency, currencies, loading } = useCurrency();
@@ -62,10 +63,34 @@ export default function Page() {
 
     return (
         <div>
-            <h2>Change Distribution {selectedCurrency} To {currency2}</h2>
+            {/* Text shown for user information */}
+            <div className="flex mb-1 font-bold text-2xl">
+                <div className="w-1/5 flex">
+                    {selectedCurrency} <img src={img} alt="->" /> {currency2}
+                </div>
+                <div className="w-4/5 text-end">
+                    {startDate} - {endDate}
+                </div>
+            </div>
+
+            <hr className="hr-color mb-3"/>
+            {/* Contener for data changes */}
             <div className="contener">
+                {/* Currencies changes */}
+                <div className="">
+                {loading ? (
+                    <p>Loading currencies...</p>
+                ) : (
+                    <select value={selectedCurrency} onChange={handleCurrencyChange}>
+                    {currencies.map((currency) => (
+                        <option key={currency.code} value={currency.code}>
+                        {currency.code} - {currency.name}
+                        </option>
+                    ))}
+                    </select>
+                )}
+                </div>
                 <div className="secondCurrency">
-                    <p>Select second currency, now is: {currency2}</p>
                     {loading ? (
                         <p>Loading currencies...</p>
                     ) : (
@@ -78,8 +103,8 @@ export default function Page() {
                         </select>
                     )}
                 </div>
+                {/* Date changes */}
                 <div className="mb-4">
-                    <p className="mb-2">Select date range</p>
                     <div className="flex">
                         <div>
                             <label htmlFor="startDate" className="">Start Date</label>
@@ -89,6 +114,7 @@ export default function Page() {
                                 value={startDate}
                                 onChange={handleStartDateChange}
                                 className=""
+                                placeholder="Start Date"
                             />
                         </div>
                         <div>
@@ -104,6 +130,14 @@ export default function Page() {
                     </div>
                 </div>
             </div>
+            {/* Chart description */}
+            <div className="mb-12">
+                <h1 className="text-2xl font-bold mb-2">Distribution of monthly changes</h1>
+                <p className="text-sm">
+                    Frequency histogram of changes occurring in a given interval
+                </p>
+            </div>
+            {/* Chart */}
             <div>
                 <ChartComponent
                     selectedCurrency={selectedCurrency}
