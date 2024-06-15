@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'sans': ['Arial', 'sans-serif'],
+      },
+    },
     colors: {
       transparent: 'transparent',
       current: 'currentColor',

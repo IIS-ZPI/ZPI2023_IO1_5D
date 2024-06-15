@@ -10,7 +10,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <h2>Select currency</h2>
+      <h2 className='m-2'>Select currency</h2>
       {loading ? (
         <p>Loading currencies...</p>
       ) : (
