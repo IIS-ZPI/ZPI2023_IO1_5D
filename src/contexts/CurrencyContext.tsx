@@ -33,7 +33,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
           code: rate.code,
           name: rate.currency
         }));
-        setCurrencies([{ code: 'PLN', name: 'Polski złoty' }, ...currencyData]);
+        setCurrencies([{ code: 'PLN', name: 'złoty (Polska)' }, ...currencyData]);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching currencies:', error);
