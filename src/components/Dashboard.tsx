@@ -9,14 +9,14 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="text-center mt-20">
+    <div className="text-center mt-20 flex flex-col justify-center items-center">
       <h2 className="text-3xl font-bold mb-4">Select currency</h2>
-      <div className="relative">
+      <div className="relative max-w-82">
         {loading ? (
           <p>Loading currencies...</p>
         ) : (
         <>
-          <select className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline" value={selectedCurrency} onChange={handleCurrencyChange}>
+          <select className="h-10 block appearance-none bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline" value={selectedCurrency} onChange={handleCurrencyChange}>
             {currencies.map((currency) => (
               <option key={currency.code} value={currency.code}>
                 {currency.code} - {currency.name}
