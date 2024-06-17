@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Flags from "./assets/flags.png";
 import ChangeDistribution from "./components/ChangeDistribution";
 import Dashboard from "./components/Dashboard";
-import SessionAnalysis from "./components/SessionAnalysis";
+import SessionAnalysis from "./components/session_analysis/SessionAnalysis";
 import Sidebar from "./components/Sidebar";
 import StatisticalMeasures from "./components/StatisticalMeasures";
 import { CurrencyProvider } from "./contexts/CurrencyContext";
