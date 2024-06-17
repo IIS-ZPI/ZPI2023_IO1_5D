@@ -23,8 +23,10 @@ const StatisticalMeasures: React.FC = () => {
     return `${year}-${month}-${day}`;
   };
 
-  const [startingDate, setStartingDate] = useState(getDefaultStartingDate);
-  const [isStartingDateSelected, setIsStartingDateSelected] = useState(true);
+  const [startingDate, setStartingDate] = useState(() =>
+    getDefaultStartingDate()
+  );
+  const [isStartingDateSelected, setIsStartingDateSelected] = useState(false);
   const [statistics, setStatistics] = useState<Statistics | null>(null);
 
   const calculateEndDate = (startingDate: string, timePeriod: string) => {
@@ -36,6 +38,7 @@ const StatisticalMeasures: React.FC = () => {
         result = new Date(startDate.setDate(startDate.getDate() + 7));
         break;
       case "30 days":
+      case "Switch period":
         result = new Date(startDate.setMonth(startDate.getMonth() + 1));
         break;
       case "90 days":
@@ -53,15 +56,14 @@ const StatisticalMeasures: React.FC = () => {
     return `${year}-${month}-${day}`;
   };
 
-  const [timePeriod, setTimePeriod] = useState("30 days");
-  const [isTimePeriodSelected, setIsTimePeriodSelected] = useState(true);
+  const [timePeriod, setTimePeriod] = useState("Switch period");
+  const [isTimePeriodSelected, setIsTimePeriodSelected] = useState(false);
   const [endDate, setEndDate] = useState(() =>
-    calculateEndDate(getDefaultStartingDate(), "30 days")
+    calculateEndDate(startingDate, timePeriod)
   );
 
   useEffect(() => {
-    if (!isStartingDateSelected || !isTimePeriodSelected) return;
-
+    if (isStartingDateSelected != isTimePeriodSelected) return;
     const fetchStatistics = async () => {
       setLoading(true);
       try {
@@ -79,7 +81,7 @@ const StatisticalMeasures: React.FC = () => {
     };
 
     fetchStatistics();
-  }, [selectedCurrency, startingDate, endDate, isStartingDateSelected, isTimePeriodSelected]);
+  }, [selectedCurrency, timePeriod]);
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCurrency(e.target.value);
@@ -91,19 +93,19 @@ const StatisticalMeasures: React.FC = () => {
       setStartingDate(getDefaultStartingDate());
       setIsStartingDateSelected(false);
 
-      setTimePeriod("30 days");
+      setTimePeriod("Switch period");
       setIsTimePeriodSelected(false);
-      setEndDate(calculateEndDate(getDefaultStartingDate(), "30 days"));
+      setEndDate(calculateEndDate(getDefaultStartingDate(), "Switch period"));
       return;
     }
 
     setStartingDate(newStartingDate);
     setIsStartingDateSelected(true);
 
-    setTimePeriod("30 days");
-    setIsTimePeriodSelected(true);
+    setTimePeriod("Switch period");
+    setIsTimePeriodSelected(false);
     setStatistics(null);
-    setEndDate(calculateEndDate(newStartingDate, "30 days"));
+    setEndDate("");
   };
 
   const handleTimePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -196,7 +198,7 @@ const StatisticalMeasures: React.FC = () => {
                 className="block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
                 onChange={handleStartingDateChange}
                 placeholder="Select a date"
-                value={startingDate}
+                value={isStartingDateSelected ? startingDate : ""}
                 max={getMaxDate()}
               />
             </div>
@@ -211,8 +213,11 @@ const StatisticalMeasures: React.FC = () => {
                 <select
                   className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
                   onChange={handleTimePeriodChange}
-                  value={timePeriod}
+                  value={isTimePeriodSelected ? timePeriod : "Switch period"}
                 >
+                  <option disabled selected hidden>
+                    Switch period
+                  </option>
                   <option value="7 days" disabled={!daysDifference(7)}>
                     7 days
                   </option>
