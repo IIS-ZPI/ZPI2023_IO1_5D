@@ -81,6 +81,9 @@ export default function Page() {
           case "7 days":
             result = new Date(startDate.setDate(startDate.getDate() + 7));
             break;
+          case "14 days":
+            result = new Date(startDate.setDate(startDate.getDate() + 14));
+            break;
           case "30 days":
           case "Switch period":
             result = new Date(startDate.setMonth(startDate.getMonth() + 1));
