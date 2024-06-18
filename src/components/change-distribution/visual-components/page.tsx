@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCurrency } from "../../../contexts/CurrencyContext";
 import { useExchangeRate } from "../../../contexts/ExchangeRateContext";
 import "./page.css";
@@ -32,12 +32,10 @@ export default function Page() {
 
     const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedCurrency(e.target.value);
-        updateExchangeRate();
     };
 
     const handleCurrency2Change = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrency2(e.target.value);
-        updateExchangeRate();
     };
 
     const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +48,6 @@ export default function Page() {
             setTimePeriod("Switch period");
             setIsTimePeriodSelected(false);   
             setEndDate("");
-            updateExchangeRate();
         } else {
             console.log("Start date must be after January 2, 2002. Start date have to be less then EndDate. Start date have to be in range 365 of end date");
         }
@@ -70,7 +67,6 @@ export default function Page() {
         setTimePeriod(newTimePeriod);
         setIsTimePeriodSelected(true);
         setEndDate(calculateEndDate(startDate, newTimePeriod));
-        updateExchangeRate()
       };
 
     const calculateEndDate = (startingDate: string, timePeriod: string) => {
@@ -120,28 +116,32 @@ export default function Page() {
         const differenceInTime = today.getTime() - startingDate.getTime();
         const differenceInDays = differenceInTime / (1000 * 3600 * 24);
         return differenceInDays >= days;
-      };
-
-    const updateExchangeRate = async () => {
-        try {
-            if(isStartingDateSelected && isTimePeriodSelected) {
-                calculateEndDate(startDate, timePeriod);
-                console.log("Fetching exchange rates with params:", {
-                    selectedCurrency,
-                    currency2,
-                    startDate,
-                    endDate, 
-                });
-                const rates = await getExchangeRate(selectedCurrency, currency2, startDate, endDate); {/* Tutaj zmienic */}
-                setExchangeRates(rates);
-            }
-            else {
-                throw String(isStartingDateSelected + " " + isTimePeriodSelected);
-            }
-        } catch (error) {
-            console.error("Error fetching exchange rates:", error);
-        }
     };
+
+    useEffect(() => {
+        const updateExchangeRate = async () => {
+            try {
+                if(isStartingDateSelected && isTimePeriodSelected) {
+                    calculateEndDate(startDate, timePeriod);
+                    console.log("Fetching exchange rates with params:", {
+                        selectedCurrency,
+                        currency2,
+                        startDate,
+                        endDate, 
+                    });
+                    const rates = await getExchangeRate(selectedCurrency, currency2, startDate, endDate); {/* Tutaj zmienic */}
+                    setExchangeRates(rates);
+                }
+                else {
+                    throw String(isStartingDateSelected + " " + isTimePeriodSelected);
+                }
+            } catch (error) {
+                console.error("Error fetching exchange rates:", error);
+            }
+        };
+
+        updateExchangeRate();
+    }, [selectedCurrency, currency2, startDate, endDate])
 
     return (
         <div className="w-fill m-16">
@@ -258,22 +258,22 @@ export default function Page() {
                                         Switch period
                                     </option>
                                     <option value="7 days" disabled={!daysDifference(7)}>
-                                        7 days
+                                        1 week
                                     </option>
                                     <option value="14 days" disabled={!daysDifference(14)}>
-                                        14 days
+                                        2 weeks
                                     </option>
                                     <option value="30 days" disabled={!daysDifference(30)}>
-                                        30 days
+                                        1 month
                                     </option>
                                     <option value="90 days" disabled={!daysDifference(90)}>
-                                        90 days
+                                        1 quarter
                                     </option>
                                     <option value="180 days" disabled={!daysDifference(180)}>
-                                        180 days
+                                        6 months
                                     </option>
                                     <option value="365 days" disabled={!daysDifference(365)}>
-                                        365 days
+                                        1 year
                                     </option>
                                 </select>
                                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -290,21 +290,26 @@ export default function Page() {
                     </div>
                 </div>
             </div>
-            {/* Chart description */}
-            <div className="mb-12">
-                <h1 className="text-2xl font-bold mb-2">Distribution of monthly changes</h1>
-                <p className="text-sm">
-                    Frequency histogram of changes occurring in a given interval
-                </p>
-            </div>
-            {/* Chart */}
-            <div>
-                <ChartComponent
-                    selectedCurrency={selectedCurrency}
-                    currency2={currency2}
-                    exchangeRates={exchangeRates}
-                />
+
+            {exchangeRates.length !== 0 && 
+            <>
+                {/* Chart description */}
+                <div className="mb-12">
+                    <h1 className="text-2xl font-bold mb-2">Distribution of monthly changes</h1>
+                    <p className="text-sm">
+                        Frequency histogram of changes occurring in a given interval
+                    </p>
                 </div>
+                {/* Chart */}
+                <div>
+                    <ChartComponent
+                        selectedCurrency={selectedCurrency}
+                        currency2={currency2}
+                        exchangeRates={exchangeRates}
+                    />
+                </div>
+            </>
+            }
         </div>
     );
 }
