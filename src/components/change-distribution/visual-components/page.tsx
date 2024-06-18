@@ -157,9 +157,9 @@ export default function Page() {
 
             <hr className="hr-color mb-3"/>
             {/* Contener for data changes */}
-            <div className="contener justify-between mb-10">
+            <div className="contener justify-between mb-10 gap-4">
                 {/* Currencies changes */}
-                <div className="flex ">
+                <div className="flex gap-4">
                     <div className="w-64">
                         <label className="text-xs font-bold">From</label>
                         <div className="relative">
@@ -227,7 +227,7 @@ export default function Page() {
                 </div>
                 {/* Date changes */}
                 <div className="mb-4 w-1/2 flex justify-end">
-                    <div className="flex space-x-4 w-full justify-end">
+                    <div className="flex gap-4 w-full justify-end">
                         <div className="">
                             <label htmlFor="startDate" className="block text-gray-700 text-xs font-bold mb-2">Starting date</label>
                             <input
@@ -240,7 +240,7 @@ export default function Page() {
                                 max ={getMaxDate()}
                             />
                         </div>
-                        <div className="relative w-40 pl-3">
+                        <div className="relative w-40">
                                 <label
                                     htmlFor="time-period"
                                     className="block text-gray-700 text-xs font-bold mb-2"
