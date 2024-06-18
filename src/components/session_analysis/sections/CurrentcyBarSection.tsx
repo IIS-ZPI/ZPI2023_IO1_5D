@@ -1,16 +1,23 @@
+import { isAfter } from 'date-fns'
 import { useCurrency } from '../../../contexts/CurrencyContext.tsx'
-import { DatePicker } from '../components/DatePicker/DatePicker.tsx'
+import {
+    Calendar,
+    CalendarChangeValues,
+} from '../components/Calednar/Calendar.tsx'
 import { Divider } from '../components/Divider/Divider.tsx'
 import { Option } from '../components/Select/Option.tsx'
 import { Select } from '../components/Select/Select.tsx'
 import { formatDate } from '../hooks/useFetchCurrency.utils.ts'
-import { calculateEndPeriod } from '../SessionAnalysis.utils.ts'
+import {
+    calculateEndPeriod,
+    calculateMaxAllowedDate,
+} from '../SessionAnalysis.utils.ts'
 
 type CurrencyBarSectionProps = {
     startTime: Date
     timePeriod: string
-    setStartTime: (value: Date) => void
-    setTimePeriod: (value: string) => void
+    setTimePeriod: (timePeriod: string) => void
+    setStartTime: (timePeriod: Date) => void
 }
 
 const PERIODS_OPTIONS = [
@@ -22,11 +29,41 @@ const PERIODS_OPTIONS = [
 
 export const CurrencyBarSection = ({
     startTime,
-    setStartTime,
-    setTimePeriod,
     timePeriod,
+    setTimePeriod,
+    setStartTime,
 }: CurrencyBarSectionProps) => {
     const { selectedCurrency, currencies, setSelectedCurrency } = useCurrency()
+
+    const endDate = calculateEndPeriod(startTime, timePeriod)
+    const maximumDate = calculateMaxAllowedDate(new Date(), timePeriod)
+
+    const handlePeriodChange = (timePeriod: string | undefined) => {
+        if (timePeriod) {
+            setTimePeriod(timePeriod)
+
+            const recalculatedMaxDate = calculateMaxAllowedDate(
+                new Date(),
+                timePeriod
+            )
+            const recalculatedEndDate = calculateEndPeriod(
+                startTime,
+                timePeriod
+            )
+
+            if (isAfter(recalculatedEndDate, recalculatedMaxDate)) {
+                setStartTime(recalculatedMaxDate)
+            }
+
+            setTimePeriod(timePeriod)
+        }
+    }
+
+    const handleDateChange = ({ valueAsDate }: CalendarChangeValues) => {
+        if (valueAsDate) {
+            setStartTime(valueAsDate)
+        }
+    }
 
     return (
         <div className="flex flex-col">
@@ -35,7 +72,7 @@ export const CurrencyBarSection = ({
                 <h6>
                     {formatDate(startTime)}
                     <span> - </span>
-                    {formatDate(calculateEndPeriod(startTime, timePeriod))}
+                    {formatDate(endDate)}
                 </h6>
             </div>
             <Divider />
@@ -64,21 +101,17 @@ export const CurrencyBarSection = ({
                         </Select>
                     </div>
                     <div className="flex items-center gap-2.5">
-                        <DatePicker
-                            selectedDate={startTime}
-                            setSelectedDate={(date) => {
-                                if (date) {
-                                    setStartTime(date)
-                                }
-                            }}
+                        <Calendar
+                            value={startTime}
+                            label="Start date"
+                            placeholder="Pick date"
+                            onChange={handleDateChange}
+                            max={maximumDate}
                         />
                         <Select
+                            label="Periods"
                             value={timePeriod}
-                            onChange={(value) => {
-                                if (value) {
-                                    setTimePeriod(value)
-                                }
-                            }}
+                            onChange={handlePeriodChange}
                         >
                             {PERIODS_OPTIONS.map(({ label, value }, index) => (
                                 <Option key={index} value={value}>
@@ -88,7 +121,6 @@ export const CurrencyBarSection = ({
                         </Select>
                     </div>
                 </div>
-                <div></div>
             </div>
         </div>
     )
