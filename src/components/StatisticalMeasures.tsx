@@ -37,12 +37,21 @@ const StatisticalMeasures: React.FC = () => {
       case "7 days":
         result = new Date(startDate.setDate(startDate.getDate() + 7));
         break;
+      case "14 days":
+        result = new Date(startDate.setDate(startDate.getDate() + 14));
+        break;
       case "30 days":
       case "Switch period":
         result = new Date(startDate.setMonth(startDate.getMonth() + 1));
         break;
       case "90 days":
         result = new Date(startDate.setMonth(startDate.getMonth() + 3));
+        break;
+      case "180 days":
+        result = new Date(startDate.setMonth(startDate.getMonth() + 6));
+        break;
+      case "365 days":
+        result = new Date(startDate.setFullYear(startDate.getFullYear() + 1));
         break;
       default:
         console.error("Error with timePeriod");
@@ -221,11 +230,20 @@ const StatisticalMeasures: React.FC = () => {
                   <option value="7 days" disabled={!daysDifference(7)}>
                     7 days
                   </option>
+                  <option value="14 days" disabled={!daysDifference(14)}>
+                    14 days
+                  </option>
                   <option value="30 days" disabled={!daysDifference(30)}>
                     30 days
                   </option>
                   <option value="90 days" disabled={!daysDifference(90)}>
                     90 days
+                  </option>
+                  <option value="180 days" disabled={!daysDifference(180)}>
+                    180 days
+                  </option>
+                  <option value="365 days" disabled={!daysDifference(365)}>
+                    365 days
                   </option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
