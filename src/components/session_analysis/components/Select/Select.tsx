@@ -1,5 +1,6 @@
 import classnames from 'classnames'
 import { useState } from 'react'
+import { Label } from '../Lablel/Label.tsx'
 import { SelectProps } from './Select.types.ts'
 
 export const Select = ({
@@ -15,26 +16,25 @@ export const Select = ({
     const handleFocus = () => setIsFocused(true)
     const handleBlur = () => setIsFocused(false)
 
-    const isLabelUp = isFocused || value
+    const isLabelUp = isFocused || !!value
 
     return (
         <div className={classnames('relative', className)}>
-            <label
-                htmlFor={name}
-                className={classnames(
-                    'absolute left-3 transform transition-all duration-300 text-gray-500 px-2 bg-white',
-                    { ['-top-2 text-xs']: isLabelUp },
-                    { ['top-2.5']: !isLabelUp }
-                )}
-            >
-                {label}
-            </label>
+            {label && (
+                <Label name={name} isUp={isLabelUp}>
+                    {label}
+                </Label>
+            )}
             <select
                 id={name}
                 name={name}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                className="border rounded w-full bg-transparent"
+                className={classnames(
+                    'border rounded w-full bg-transparent',
+                    'block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 rounded-lg',
+                    'shadow leading-tight focus:outline-none focus:shadow-outline'
+                )}
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
             >
