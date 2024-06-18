@@ -37,12 +37,21 @@ const StatisticalMeasures: React.FC = () => {
       case "7 days":
         result = new Date(startDate.setDate(startDate.getDate() + 7));
         break;
+      case "14 days":
+        result = new Date(startDate.setDate(startDate.getDate() + 14));
+        break;
       case "30 days":
       case "Switch period":
         result = new Date(startDate.setMonth(startDate.getMonth() + 1));
         break;
       case "90 days":
         result = new Date(startDate.setMonth(startDate.getMonth() + 3));
+        break;
+      case "180 days":
+        result = new Date(startDate.setMonth(startDate.getMonth() + 6));
+        break;
+      case "365 days":
+        result = new Date(startDate.setFullYear(startDate.getFullYear() + 1));
         break;
       default:
         console.error("Error with timePeriod");
@@ -81,13 +90,17 @@ const StatisticalMeasures: React.FC = () => {
     };
 
     fetchStatistics();
-  }, [selectedCurrency, timePeriod]);
+  }, [selectedCurrency, startingDate, timePeriod]);
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault()
+
     setSelectedCurrency(e.target.value);
   };
 
   const handleStartingDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+
     const newStartingDate = e.target.value;
     if (newStartingDate === "") {
       setStartingDate(getDefaultStartingDate());
@@ -109,6 +122,8 @@ const StatisticalMeasures: React.FC = () => {
   };
 
   const handleTimePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault()
+
     const newTimePeriod = e.target.value;
     setTimePeriod(newTimePeriod);
     setIsTimePeriodSelected(true);
@@ -132,10 +147,6 @@ const StatisticalMeasures: React.FC = () => {
     const day = String(maxDate.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <div className="w-fill m-16">
@@ -219,13 +230,22 @@ const StatisticalMeasures: React.FC = () => {
                     Switch period
                   </option>
                   <option value="7 days" disabled={!daysDifference(7)}>
-                    7 days
+                    1 week
+                  </option>
+                  <option value="14 days" disabled={!daysDifference(14)}>
+                    2 weeks
                   </option>
                   <option value="30 days" disabled={!daysDifference(30)}>
-                    30 days
+                    1 month
                   </option>
                   <option value="90 days" disabled={!daysDifference(90)}>
-                    90 days
+                    1 quarter
+                  </option>
+                  <option value="180 days" disabled={!daysDifference(180)}>
+                    6 months
+                  </option>
+                  <option value="365 days" disabled={!daysDifference(365)}>
+                    1 year
                   </option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
