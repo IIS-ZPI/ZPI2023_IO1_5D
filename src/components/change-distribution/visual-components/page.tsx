@@ -9,13 +9,26 @@ export default function Page() {
     const { selectedCurrency, setSelectedCurrency, currencies, loading } = useCurrency();
     const { getExchangeRate } = useExchangeRate();
     const [currency2, setCurrency2] = useState("EUR");
-    const [startDate, setStartDate] = useState("2023-10-01");
+    
     const [exchangeRates, setExchangeRates] = useState<number[]>([]);
     const [isStartingDateSelected, setIsStartingDateSelected] = useState(false);
     const [currentDate] = useState(new Date());
     const [timePeriod, setTimePeriod] = useState("Switch period");
     const [isTimePeriodSelected, setIsTimePeriodSelected] = useState(false);
+
+    const getDefaultStartingDate = () => {
+        const today = new Date();
+        const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
     
+        const year = lastMonth.getFullYear();
+        const month = String(lastMonth.getMonth() + 1).padStart(2, "0");
+        const day = String(lastMonth.getDate()).padStart(2, "0");
+    
+        return `${year}-${month}-${day}`;
+      };
+    const [startDate, setStartDate] = useState(() =>
+        getDefaultStartingDate()
+    );
 
     const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedCurrency(e.target.value);
@@ -34,11 +47,23 @@ export default function Page() {
         if (newStartDate > minDate && newStartDate < currentDate) {
             setStartDate(e.target.value);
             setIsStartingDateSelected(true);
+            setTimePeriod("Switch period");
+            setIsTimePeriodSelected(false);   
+            setEndDate("");
             updateExchangeRate();
         } else {
             console.log("Start date must be after January 2, 2002. Start date have to be less then EndDate. Start date have to be in range 365 of end date");
         }
     };
+
+    const getMaxDate = () => {
+        const today = new Date();
+        const maxDate = new Date(today.setDate(today.getDate() - 7));
+        const year = maxDate.getFullYear();
+        const month = String(maxDate.getMonth() + 1).padStart(2, "0");
+        const day = String(maxDate.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      };
 
     const handleTimePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newTimePeriod = e.target.value;
@@ -91,7 +116,7 @@ export default function Page() {
         const startingDate = new Date(startDate);
         const differenceInTime = today.getTime() - startingDate.getTime();
         const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-        return differenceInDays === days;
+        return differenceInDays >= days;
       };
 
     const updateExchangeRate = async () => {
@@ -205,10 +230,11 @@ export default function Page() {
                             <input
                                 type="date"
                                 id="startDate"
-                                value={startDate}
+                                value={isStartingDateSelected ? startDate : ""}
                                 onChange={handleStartDateChange}
                                 className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Start Date"
+                                max ={getMaxDate()}
                             />
                         </div>
                         <div className="relative w-40 pl-3">
