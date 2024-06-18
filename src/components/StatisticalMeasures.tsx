@@ -90,13 +90,17 @@ const StatisticalMeasures: React.FC = () => {
     };
 
     fetchStatistics();
-  }, [selectedCurrency, timePeriod]);
+  }, [selectedCurrency, startingDate, timePeriod]);
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault()
+
     setSelectedCurrency(e.target.value);
   };
 
   const handleStartingDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+
     const newStartingDate = e.target.value;
     if (newStartingDate === "") {
       setStartingDate(getDefaultStartingDate());
@@ -118,6 +122,8 @@ const StatisticalMeasures: React.FC = () => {
   };
 
   const handleTimePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault()
+
     const newTimePeriod = e.target.value;
     setTimePeriod(newTimePeriod);
     setIsTimePeriodSelected(true);
@@ -141,10 +147,6 @@ const StatisticalMeasures: React.FC = () => {
     const day = String(maxDate.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <div className="w-fill m-16">
