@@ -228,22 +228,22 @@ const StatisticalMeasures: React.FC = () => {
                     Switch period
                   </option>
                   <option value="7 days" disabled={!daysDifference(7)}>
-                    7 days
+                    1 week
                   </option>
                   <option value="14 days" disabled={!daysDifference(14)}>
-                    14 days
+                    2 weeks
                   </option>
                   <option value="30 days" disabled={!daysDifference(30)}>
-                    30 days
+                    1 month
                   </option>
                   <option value="90 days" disabled={!daysDifference(90)}>
-                    90 days
+                    1 quarter
                   </option>
                   <option value="180 days" disabled={!daysDifference(180)}>
-                    180 days
+                    6 months
                   </option>
                   <option value="365 days" disabled={!daysDifference(365)}>
-                    365 days
+                    1 year
                   </option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
