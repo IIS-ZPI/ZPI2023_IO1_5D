@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Flags from "./assets/flags.png";
-import ChangeDistribution from "./components/ChangeDistribution";
+import ChangeDistribution from "./components/change-distribution/ChangeDistribution";
 import Dashboard from "./components/Dashboard";
 import SessionAnalysis from "./components/session_analysis/SessionAnalysis";
 import Sidebar from "./components/Sidebar";
