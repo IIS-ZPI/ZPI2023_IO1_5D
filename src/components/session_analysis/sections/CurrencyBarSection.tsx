@@ -15,8 +15,10 @@ type CurrencyBarSectionProps = {
 const PERIODS_OPTIONS = [
     { value: '365', label: '1 year' },
     { value: '182', label: '6 months' },
-    { value: '90', label: '3 months' },
+    { value: '90', label: '1 quarter' },
     { value: '30', label: '1 month' },
+    { value: '14', label: '2 weeks' },
+    { value: '7', label: '1 week' },
 ];
 
 const CurrencyBarSection: React.FC<CurrencyBarSectionProps> = ({
