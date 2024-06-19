@@ -1,6 +1,6 @@
 import { Alert, Card } from '@material-tailwind/react'
 import { useState } from 'react'
-import { useCurrency } from '../../contexts/CurrencyContext'
+import { useCurrency } from '../../contexts/CurrencyProvider'
 import {
     calculateEndPeriod,
     calculateMaxAllowedDate,

@@ -6,8 +6,8 @@ import Dashboard from "./components/Dashboard";
 import SessionAnalysis from "./components/session_analysis/SessionAnalysis";
 import Sidebar from "./components/Sidebar";
 import StatisticalMeasures from "./components/StatisticalMeasures";
-import { CurrencyProvider } from "./contexts/CurrencyContext";
-import { StatisticsProvider } from "./contexts/StatisticsContext";
+import { CurrencyProvider } from "./contexts/CurrencyProvider";
+import { StatisticsProvider } from "./contexts/StatisticsProvider";
 
 const App: React.FC = () => {
   return (

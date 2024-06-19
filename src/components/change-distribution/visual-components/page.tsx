@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useCurrency } from "../../../contexts/CurrencyContext";
-import { useExchangeRate } from "../../../contexts/ExchangeRateContext";
+import { useCurrency } from "../../../contexts/CurrencyProvider";
+import { useExchangeRate } from "../../../contexts/ExchangeRateProvider";
 import "./page.css";
 import ChartComponent from './chart';
 import img from '../../../assets/c-right.svg'

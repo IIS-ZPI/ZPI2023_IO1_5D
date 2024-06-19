@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useCurrency } from "../contexts/CurrencyContext";
-import { Statistics, useStatistics } from "../contexts/StatisticsContext";
+import { useCurrency } from "../contexts/CurrencyProvider";
+import { Statistics, useStatistics } from "../contexts/StatisticsProvider";
+import { getDefaultStartingDate, calculateEndDate, daysDifference, getMaxDate } from "../utils/dateUtils";
 
 const StatisticalMeasures: React.FC = () => {
   const {
@@ -12,75 +13,20 @@ const StatisticalMeasures: React.FC = () => {
   } = useCurrency();
   const { getStatistics } = useStatistics();
 
-  const getDefaultStartingDate = () => {
-    const today = new Date();
-    const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
-
-    const year = lastMonth.getFullYear();
-    const month = String(lastMonth.getMonth() + 1).padStart(2, "0");
-    const day = String(lastMonth.getDate()).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-  };
-
-  const [startingDate, setStartingDate] = useState(() =>
-    getDefaultStartingDate()
-  );
+  const [startingDate, setStartingDate] = useState(() => getDefaultStartingDate());
   const [isStartingDateSelected, setIsStartingDateSelected] = useState(false);
   const [statistics, setStatistics] = useState<Statistics | null>(null);
 
-  const calculateEndDate = (startingDate: string, timePeriod: string) => {
-    const startDate = new Date(startingDate);
-    let result: Date;
-
-    switch (timePeriod) {
-      case "7 days":
-        result = new Date(startDate.setDate(startDate.getDate() + 7));
-        break;
-      case "14 days":
-        result = new Date(startDate.setDate(startDate.getDate() + 14));
-        break;
-      case "30 days":
-      case "Switch period":
-        result = new Date(startDate.setMonth(startDate.getMonth() + 1));
-        break;
-      case "90 days":
-        result = new Date(startDate.setMonth(startDate.getMonth() + 3));
-        break;
-      case "180 days":
-        result = new Date(startDate.setMonth(startDate.getMonth() + 6));
-        break;
-      case "365 days":
-        result = new Date(startDate.setFullYear(startDate.getFullYear() + 1));
-        break;
-      default:
-        console.error("Error with timePeriod");
-        return "";
-    }
-
-    const year = result.getFullYear();
-    const month = String(result.getMonth() + 1).padStart(2, "0");
-    const day = String(result.getDate()).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-  };
-
   const [timePeriod, setTimePeriod] = useState("Switch period");
   const [isTimePeriodSelected, setIsTimePeriodSelected] = useState(false);
-  const [endDate, setEndDate] = useState(() =>
-    calculateEndDate(startingDate, timePeriod)
-  );
+  const [endDate, setEndDate] = useState(() => calculateEndDate(startingDate, timePeriod));
 
   useEffect(() => {
-    if (isStartingDateSelected != isTimePeriodSelected) return;
+    if (isStartingDateSelected !== isTimePeriodSelected) return;
     const fetchStatistics = async () => {
       setLoading(true);
       try {
-        const stats = await getStatistics(
-          selectedCurrency,
-          startingDate,
-          endDate
-        );
+        const stats = await getStatistics(selectedCurrency, startingDate, endDate);
         setStatistics(stats);
       } catch (error) {
         console.error("Error fetching statistics:", error);
@@ -93,28 +39,25 @@ const StatisticalMeasures: React.FC = () => {
   }, [selectedCurrency, startingDate, timePeriod]);
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault()
-
+    e.preventDefault();
     setSelectedCurrency(e.target.value);
   };
 
   const handleStartingDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-
+    e.preventDefault();
     const newStartingDate = e.target.value;
     if (newStartingDate === "") {
-      setStartingDate(getDefaultStartingDate());
+      const defaultDate = getDefaultStartingDate();
+      setStartingDate(defaultDate);
       setIsStartingDateSelected(false);
-
       setTimePeriod("Switch period");
       setIsTimePeriodSelected(false);
-      setEndDate(calculateEndDate(getDefaultStartingDate(), "Switch period"));
+      setEndDate(calculateEndDate(defaultDate, "Switch period"));
       return;
     }
 
     setStartingDate(newStartingDate);
     setIsStartingDateSelected(true);
-
     setTimePeriod("Switch period");
     setIsTimePeriodSelected(false);
     setStatistics(null);
@@ -122,30 +65,11 @@ const StatisticalMeasures: React.FC = () => {
   };
 
   const handleTimePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault()
-
+    e.preventDefault();
     const newTimePeriod = e.target.value;
     setTimePeriod(newTimePeriod);
     setIsTimePeriodSelected(true);
     setEndDate(calculateEndDate(startingDate, newTimePeriod));
-  };
-
-  const daysDifference = (days: number) => {
-    if (!isStartingDateSelected) return false;
-    const today = new Date();
-    const startDate = new Date(startingDate);
-    const differenceInTime = today.getTime() - startDate.getTime();
-    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-    return differenceInDays >= days;
-  };
-
-  const getMaxDate = () => {
-    const today = new Date();
-    const maxDate = new Date(today.setDate(today.getDate() - 7));
-    const year = maxDate.getFullYear();
-    const month = String(maxDate.getMonth() + 1).padStart(2, "0");
-    const day = String(maxDate.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
   };
 
   return (
@@ -158,10 +82,7 @@ const StatisticalMeasures: React.FC = () => {
       </div>
       <div className="flex mb-16 justify-between">
         <div className="relative w-64">
-          <label
-            htmlFor="currency"
-            className="block text-black text-xs font-bold mb-2"
-          >
+          <label htmlFor="currency" className="block text-black text-xs font-bold mb-2">
             Currency
           </label>
           <div className="relative">
@@ -182,11 +103,7 @@ const StatisticalMeasures: React.FC = () => {
                   ))}
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    className="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
+                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path d="M7 10l5 5 5-5H7z" />
                   </svg>
                 </div>
@@ -198,10 +115,7 @@ const StatisticalMeasures: React.FC = () => {
         <div>
           <div className="flex">
             <div className="relative w-40">
-              <label
-                htmlFor="start-date"
-                className="block text-gray-700 text-xs font-bold mb-2"
-              >
+              <label htmlFor="start-date" className="block text-gray-700 text-xs font-bold mb-2">
                 Starting date
               </label>
               <input
@@ -214,10 +128,7 @@ const StatisticalMeasures: React.FC = () => {
               />
             </div>
             <div className="relative w-40 pl-3">
-              <label
-                htmlFor="time-period"
-                className="block text-gray-700 text-xs font-bold mb-2"
-              >
+              <label htmlFor="time-period" className="block text-gray-700 text-xs font-bold mb-2">
                 Time period
               </label>
               <div className="relative">
@@ -229,31 +140,27 @@ const StatisticalMeasures: React.FC = () => {
                   <option disabled selected hidden>
                     Switch period
                   </option>
-                  <option value="7 days" disabled={!daysDifference(7)}>
+                  <option value="7 days" disabled={!daysDifference(startingDate, 7)}>
                     1 week
                   </option>
-                  <option value="14 days" disabled={!daysDifference(14)}>
+                  <option value="14 days" disabled={!daysDifference(startingDate, 14)}>
                     2 weeks
                   </option>
-                  <option value="30 days" disabled={!daysDifference(30)}>
+                  <option value="30 days" disabled={!daysDifference(startingDate, 30)}>
                     1 month
                   </option>
-                  <option value="90 days" disabled={!daysDifference(90)}>
+                  <option value="90 days" disabled={!daysDifference(startingDate, 90)}>
                     1 quarter
                   </option>
-                  <option value="180 days" disabled={!daysDifference(180)}>
+                  <option value="180 days" disabled={!daysDifference(startingDate, 180)}>
                     6 months
                   </option>
-                  <option value="365 days" disabled={!daysDifference(365)}>
+                  <option value="365 days" disabled={!daysDifference(startingDate, 365)}>
                     1 year
                   </option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    className="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
+                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path d="M7 10l5 5 5-5H7z" />
                   </svg>
                 </div>
@@ -266,18 +173,10 @@ const StatisticalMeasures: React.FC = () => {
         <div>
           <h2 className="text-2xl font-bold">Parameters</h2>
           <div className="ps-1 mt-4 font-medium text-md">
-            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">
-              Mode:
-            </p>
-            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">
-              Median:
-            </p>
-            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">
-              Standard deviation:
-            </p>
-            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">
-              Coefficient of variation:
-            </p>
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Mode:</p>
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Median:</p>
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Standard deviation:</p>
+            <p className="mb-2 ps-2 py-1 border border-transparent bg-light_gray rounded-lg">Coefficient of variation:</p>
           </div>
         </div>
         <div>
@@ -305,9 +204,7 @@ const StatisticalMeasures: React.FC = () => {
               type="text"
               readOnly
               className="mb-2 py-1 px-2 block rounded-lg border border-gray_for_text w-1/2"
-              value={
-                statistics ? statistics.coefficientOfVariation.toFixed(8) : 0
-              }
+              value={statistics ? statistics.coefficientOfVariation.toFixed(8) : 0}
             />
           </div>
         </div>
@@ -316,4 +213,4 @@ const StatisticalMeasures: React.FC = () => {
   );
 };
 
-export default StatisticalMeasures
+export default StatisticalMeasures;

@@ -1,6 +1,6 @@
 import React from "react";
 import { isAfter } from 'date-fns';
-import { useCurrency } from '../../../contexts/CurrencyContext';
+import { useCurrency } from '../../../contexts/CurrencyProvider';
 import { Calendar, CalendarChangeValues } from '../components/Calendar/Calendar';
 import { formatDate } from '../hooks/useFetchCurrency.utils';
 import { calculateEndPeriod, calculateMaxAllowedDate } from '../SessionAnalysis.utils';

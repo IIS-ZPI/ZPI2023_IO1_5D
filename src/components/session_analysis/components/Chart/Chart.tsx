@@ -1,7 +1,7 @@
 import { Chart as ChartJS, registerables } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 
-import { useCurrency } from '../../../../contexts/CurrencyContext.tsx'
+import { useCurrency } from '../../../../contexts/CurrencyProvider.tsx'
 import { createData, createOptions } from './Chart.utils.ts'
 import { CurrencyResponse } from '../../hooks/useFetchCurrency.types.ts'
 
