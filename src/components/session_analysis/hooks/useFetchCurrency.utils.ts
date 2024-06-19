@@ -15,7 +15,7 @@ export const createPath = (
     startDate?: Date | string,
     endDate?: Date | string
 ) => {
-    const path = ['http://api.nbp.pl/api/exchangerates/rates/a/']
+    const path = ['https://api.nbp.pl/api/exchangerates/rates/a/']
 
     if (currency) {
         path.push(currency + '/')
