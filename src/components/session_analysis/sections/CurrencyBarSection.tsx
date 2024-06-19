@@ -14,7 +14,7 @@ type CurrencyBarSectionProps = {
 
 const PERIODS_OPTIONS = [
     { value: '365', label: '1 year' },
-    { value: '182', label: 'Half year' },
+    { value: '182', label: '6 months' },
     { value: '90', label: '3 months' },
     { value: '30', label: '1 month' },
 ];
