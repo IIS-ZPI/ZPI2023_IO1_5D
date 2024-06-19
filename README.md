@@ -3,6 +3,7 @@
 ## Tech Stack
 
 - React with libraries:
+  - Vite with Vitest
   - Axios
   - Chart.js
   - TailwindCSS
