@@ -8,7 +8,7 @@ import img from '../../../assets/c-right.svg'
 export default function Page() {
     const { selectedCurrency, setSelectedCurrency, currencies, loading } = useCurrency();
     const { getExchangeRate } = useExchangeRate();
-    const [currency2, setCurrency2] = useState("EUR");
+    const [currency2, setCurrency2] = useState("PLN");
     
     const [exchangeRates, setExchangeRates] = useState<number[]>([]);
     const [isStartingDateSelected, setIsStartingDateSelected] = useState(false);
@@ -121,14 +121,8 @@ export default function Page() {
     useEffect(() => {
         const updateExchangeRate = async () => {
             try {
-                if(isStartingDateSelected && isTimePeriodSelected) {
+                if(isStartingDateSelected === isTimePeriodSelected) {
                     calculateEndDate(startDate, timePeriod);
-                    console.log("Fetching exchange rates with params:", {
-                        selectedCurrency,
-                        currency2,
-                        startDate,
-                        endDate, 
-                    });
                     const rates = await getExchangeRate(selectedCurrency, currency2, startDate, endDate); {/* Tutaj zmienic */}
                     setExchangeRates(rates);
                 }
