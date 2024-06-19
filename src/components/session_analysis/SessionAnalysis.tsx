@@ -12,7 +12,7 @@ import CurrencyBarSection from './sections/CurrencyBarSection'
 import { useFetchCurrency } from './hooks/useFetchCurrency'
 import { formatDate } from './hooks/useFetchCurrency.utils'
 
-const DEFAULT_TIME_PERIOD = '365'
+const DEFAULT_TIME_PERIOD = '30'
 
 const SessionAnalysis = () => {
     const [startTime, setStartTime] = useState(
