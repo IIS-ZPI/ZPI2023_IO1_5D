@@ -6,3 +6,4 @@ export default defineConfig({
   plugins: [react()],
   base: '/ZPI2023_IO1_5D/',
 })
+

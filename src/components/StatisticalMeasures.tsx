@@ -150,7 +150,7 @@ const StatisticalMeasures: React.FC = () => {
 
   return (
     <div className="w-fill m-16">
-      <div className="flex justify-between items-center mb-4 border-b-2 border-gray_for_text px-4">
+      <div className="flex justify-between items-center mb-4 border-b-2 border-gray_for_text">
         <h1 className="text-3xl font-bold">{selectedCurrency}</h1>
         <div className="text-xl font-bold">
           {startingDate} - {endDate}
@@ -316,4 +316,4 @@ const StatisticalMeasures: React.FC = () => {
   );
 };
 
-export default StatisticalMeasures;
+export default StatisticalMeasures
