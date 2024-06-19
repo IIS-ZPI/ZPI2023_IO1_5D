@@ -1,9 +1,9 @@
 import React from "react";
 import { isAfter } from 'date-fns';
-import { useCurrency } from '../../../contexts/CurrencyContext.tsx';
+import { useCurrency } from '../../../contexts/CurrencyProvider';
 import { Calendar, CalendarChangeValues } from '../components/Calendar/Calendar';
-import { formatDate } from '../hooks/useFetchCurrency.utils.ts';
-import { calculateEndPeriod, calculateMaxAllowedDate } from '../SessionAnalysis.utils.ts';
+import { formatDate } from '../hooks/useFetchCurrency.utils';
+import { calculateEndPeriod, calculateMaxAllowedDate } from '../SessionAnalysis.utils';
 
 type CurrencyBarSectionProps = {
     startTime: Date;

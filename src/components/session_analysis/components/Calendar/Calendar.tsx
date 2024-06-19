@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import { formatDate } from 'date-fns'
 import { useState } from 'react'
-import { Label } from '../Lablel/Label.tsx'
+import { Label } from '../Lablel/Label'
 
 export type CalendarChangeValues = {
     valueAsDate: Date | null

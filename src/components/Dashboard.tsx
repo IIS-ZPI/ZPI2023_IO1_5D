@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCurrency } from '../contexts/CurrencyContext';
+import { useCurrency } from '../contexts/CurrencyProvider';
 
 const Dashboard: React.FC = () => {
   const { selectedCurrency, setSelectedCurrency, currencies, loading } = useCurrency();

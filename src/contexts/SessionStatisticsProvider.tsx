@@ -18,34 +18,34 @@ export interface SessionStatisticsProviderProps {
 
 const SessionStatisticsContext = createContext<SessionStatisticsContextProps | undefined>(undefined);
 
-export const SessionStatisticsProvider: React.FC<SessionStatisticsProviderProps> = ({ children }) => {
-  const getSessionStatistics = async (currency: string, startDate: string, endDate: string): Promise<SessionStatistics> => {
-    const baseURL = 'https://api.nbp.pl/api/exchangerates/rates/A';
-    const response = await axios.get(`${baseURL}/${currency}/${startDate}/${endDate}/?format=json`);
-    const rates: number[] = response.data.rates.map((rate: { mid: number }) => rate.mid);
+export const getSessionStatistics = async (currency: string, startDate: string, endDate: string): Promise<SessionStatistics> => {
+  const baseURL = 'https://api.nbp.pl/api/exchangerates/rates/A';
+  const response = await axios.get(`${baseURL}/${currency}/${startDate}/${endDate}/?format=json`);
+  const rates: number[] = response.data.rates.map((rate: { mid: number }) => rate.mid);
 
-    let risingSessions = 0;
-    let fallingSessions = 0;
-    let noChangeSessions = 0;
+  let risingSessions = 0;
+  let fallingSessions = 0;
+  let noChangeSessions = 0;
 
-    for (let i = 1; i < rates.length; i++) {
-      if (rates[i] > rates[i - 1]) {
-        risingSessions++;
-      } else if (rates[i] < rates[i - 1]) {
-        fallingSessions++;
-      } else {
-        noChangeSessions++;
-      }
+  for (let i = 1; i < rates.length; i++) {
+    if (rates[i] > rates[i - 1]) {
+      risingSessions++;
+    } else if (rates[i] < rates[i - 1]) {
+      fallingSessions++;
+    } else {
+      noChangeSessions++;
     }
+  }
 
-    return {
-      risingSessions,
-      fallingSessions,
-      noChangeSessions,
-      values: rates,
-    };
+  return {
+    risingSessions,
+    fallingSessions,
+    noChangeSessions,
+    values: rates,
   };
+};
 
+export const SessionStatisticsProvider: React.FC<SessionStatisticsProviderProps> = ({ children }) => {
   return (
     <SessionStatisticsContext.Provider value={{ getSessionStatistics }}>
       {children}
