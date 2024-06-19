@@ -1,16 +1,16 @@
 import { Alert, Card } from '@material-tailwind/react'
 import { useState } from 'react'
-import { useCurrency } from '../../contexts/CurrencyContext.tsx'
+import { useCurrency } from '../../contexts/CurrencyContext'
 import {
     calculateEndPeriod,
     calculateMaxAllowedDate,
-} from './SessionAnalysis.utils.ts'
-import { PeriodsSection } from './sections/PeriodsSection.tsx'
-import { Chart } from './components/Chart/Chart.tsx'
-import { State } from './hooks/useFetchCurrency.types.ts'
-import CurrencyBarSection from './sections/CurrencyBarSection.tsx'
-import { useFetchCurrency } from './hooks/useFetchCurrency.ts'
-import { formatDate } from './hooks/useFetchCurrency.utils.ts'
+} from './SessionAnalysis.utils'
+import { PeriodsSection } from './sections/PeriodsSection'
+import { Chart } from './components/Chart/Chart'
+import { State } from './hooks/useFetchCurrency.types'
+import CurrencyBarSection from './sections/CurrencyBarSection'
+import { useFetchCurrency } from './hooks/useFetchCurrency'
+import { formatDate } from './hooks/useFetchCurrency.utils'
 
 const DEFAULT_TIME_PERIOD = '365'
 
