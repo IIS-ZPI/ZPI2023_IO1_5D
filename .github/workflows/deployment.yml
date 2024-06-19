@@ -15,12 +15,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        
+
     - run: npm install yarn
     - run: yarn
     - run: yarn build
@@ -32,27 +33,32 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Fetch all tags
+      run: git fetch --tags
+
     - name: Get latest tag
       id: get_latest_tag
-      run: echo ::set-output name=tag::$(git describe --tags `git rev-list --tags --max-count=1`)
+      run: |
+        latest_tag=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null)
+        if [ -z "$latest_tag" ]; then
+          echo "No tags found. Setting default tag to v0.0.0"
+          latest_tag="v0.0.0"
+        fi
+        echo "::set-output name=tag::$latest_tag"
 
     - name: Calculate new tag
       id: calc_new_tag
       run: |
         latest_tag=${{ steps.get_latest_tag.outputs.tag }}
-        if [ -z "$latest_tag" ]; then
-          new_tag="v1.0.0"
-        else
-          tag_number=$(echo $latest_tag | sed -e 's/^v//')
-          IFS='.' read -r -a parts <<< "$tag_number"
-          major=${parts[0]}
-          minor=${parts[1]}
-          patch=${parts[2]}
-          new_patch=$((patch + 1))
-          new_tag="v$major.$minor.$new_patch"
-        fi
+        tag_number=$(echo $latest_tag | sed -e 's/^v//')
+        IFS='.' read -r -a parts <<< "$tag_number"
+        major=${parts[0]}
+        minor=${parts[1]}
+        patch=${parts[2]}
+        new_patch=$((patch + 1))
+        new_tag="v$major.$minor.$new_patch"
         echo "New tag: $new_tag"
-        echo ::set-output name=new_tag::$new_tag
+        echo "::set-output name=new_tag::$new_tag"
 
     - name: Create new tag
       run: |
