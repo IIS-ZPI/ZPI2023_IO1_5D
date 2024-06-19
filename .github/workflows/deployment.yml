@@ -31,3 +31,44 @@ jobs:
         yarn deploy -- -u "github-actions-bot <support+actions@github.com>"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get latest tag
+      id: get_latest_tag
+      run: echo ::set-output name=tag::$(git describe --tags `git rev-list --tags --max-count=1`)
+
+    - name: Calculate new tag
+      id: calc_new_tag
+      run: |
+        latest_tag=${{ steps.get_latest_tag.outputs.tag }}
+        if [ -z "$latest_tag" ]; then
+          new_tag="v1.0.0"
+        else
+          tag_number=$(echo $latest_tag | sed -e 's/^v//')
+          IFS='.' read -r -a parts <<< "$tag_number"
+          major=${parts[0]}
+          minor=${parts[1]}
+          patch=${parts[2]}
+          new_patch=$((patch + 1))
+          new_tag="v$major.$minor.$new_patch"
+        fi
+        echo "New tag: $new_tag"
+        echo ::set-output name=new_tag::$new_tag
+
+    - name: Create new tag
+      run: |
+        new_tag=${{ steps.calc_new_tag.outputs.new_tag }}
+        git tag $new_tag
+        git push origin $new_tag
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create GitHub release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ steps.calc_new_tag.outputs.new_tag }}
+        release_name: ${{ steps.calc_new_tag.outputs.new_tag }}
+        body: "Release ${{ steps.calc_new_tag.outputs.new_tag }}"
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
