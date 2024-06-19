@@ -8,7 +8,7 @@ import img from '../../../assets/c-right.svg'
 export default function Page() {
     const { selectedCurrency, setSelectedCurrency, currencies, loading } = useCurrency();
     const { getExchangeRate } = useExchangeRate();
-    const [currency2, setCurrency2] = useState("EUR");
+    const [currency2, setCurrency2] = useState("PLN");
     
     const [exchangeRates, setExchangeRates] = useState<number[]>([]);
     const [isStartingDateSelected, setIsStartingDateSelected] = useState(false);
