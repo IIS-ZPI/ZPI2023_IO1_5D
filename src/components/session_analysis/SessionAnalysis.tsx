@@ -8,7 +8,7 @@ import {
 import { PeriodsSection } from './sections/PeriodsSection.tsx'
 import { Chart } from './components/Chart/Chart.tsx'
 import { State } from './hooks/useFetchCurrency.types.ts'
-import { CurrencyBarSection } from './sections/CurrentcyBarSection.tsx'
+import CurrencyBarSection from './sections/CurrencyBarSection.tsx'
 import { useFetchCurrency } from './hooks/useFetchCurrency.ts'
 import { formatDate } from './hooks/useFetchCurrency.utils.ts'
 
@@ -28,7 +28,7 @@ const SessionAnalysis = () => {
     })
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="w-fill m-16">
             <CurrencyBarSection
                 startTime={startTime}
                 timePeriod={timePeriod}

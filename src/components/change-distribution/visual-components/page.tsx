@@ -146,16 +146,15 @@ export default function Page() {
     return (
         <div className="w-fill m-16">
             {/* Text shown for user information */}
-            <div className="flex mb-1 font-bold text-2xl">
-                <div className="w-1/5 flex">
+            <div className="flex justify-between items-center mb-4 font-bold text-3xl border-b-2 border-gray_for_text">
+                <div className="flex">
                     {selectedCurrency} <img src={img} alt="->" /> {currency2}
                 </div>
-                <div className="w-4/5 text-end">
+                <div className="text-xl text-end">
                     {startDate} - {endDate}
                 </div>
             </div>
 
-            <hr className="hr-color mb-3"/>
             {/* Contener for data changes */}
             <div className="contener justify-between mb-10 gap-4">
                 {/* Currencies changes */}
