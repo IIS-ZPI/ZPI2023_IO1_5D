@@ -18,17 +18,17 @@ export default function Page() {
 
     const getDefaultStartingDate = () => {
         const today = new Date();
-        const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
-    
-        const year = lastMonth.getFullYear();
-        const month = String(lastMonth.getMonth() + 1).padStart(2, "0");
-        const day = String(lastMonth.getDate()).padStart(2, "0");
-    
+        const firstDayOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        const firstDayOfPreviousMonth = new Date(firstDayOfCurrentMonth.setMonth(firstDayOfCurrentMonth.getMonth() - 1));
+
+        const year = firstDayOfPreviousMonth.getFullYear();
+        const month = String(firstDayOfPreviousMonth.getMonth() + 1).padStart(2, "0");
+        const day = String(firstDayOfPreviousMonth.getDate()).padStart(2, "0");
+
         return `${year}-${month}-${day}`;
-      };
-    const [startDate, setStartDate] = useState(() =>
-        getDefaultStartingDate()
-    );
+    };
+
+    const [startDate, setStartDate] = useState(() => getDefaultStartingDate());
 
     const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedCurrency(e.target.value);
@@ -60,54 +60,63 @@ export default function Page() {
         const month = String(maxDate.getMonth() + 1).padStart(2, "0");
         const day = String(maxDate.getDate()).padStart(2, "0");
         return `${year}-${month}-${day}`;
-      };
+    };
 
     const handleTimePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newTimePeriod = e.target.value;
         setTimePeriod(newTimePeriod);
         setIsTimePeriodSelected(true);
         setEndDate(calculateEndDate(startDate, newTimePeriod));
-      };
+    };
 
     const calculateEndDate = (startingDate: string, timePeriod: string) => {
         const startDate = new Date(startingDate);
         let result: Date;
-    
+
         switch (timePeriod) {
-          case "7 days":
-            result = new Date(startDate.setDate(startDate.getDate() + 7));
-            break;
-          case "14 days":
-            result = new Date(startDate.setDate(startDate.getDate() + 14));
-            break;
-          case "30 days":
-          case "Switch period":
-            result = new Date(startDate.setMonth(startDate.getMonth() + 1));
-            break;
-          case "90 days":
-            result = new Date(startDate.setMonth(startDate.getMonth() + 3));
-            break;
-          case "180 days":
-            result = new Date(startDate.setMonth(startDate.getMonth() + 6));
-            break;
-          case "365 days":
-            result = new Date(startDate.setFullYear(startDate.getFullYear() + 1));
-            break;
-          default:
-            console.error("Error with timePeriod");
-            return "";
+            case "7 days":
+                result = new Date(startDate.setDate(startDate.getDate() + 7));
+                break;
+            case "14 days":
+                result = new Date(startDate.setDate(startDate.getDate() + 14));
+                break;
+            case "30 days":
+            case "Switch period":
+                result = new Date(startDate.setMonth(startDate.getMonth() + 1));
+                break;
+            case "90 days":
+                result = new Date(startDate.setMonth(startDate.getMonth() + 3));
+                break;
+            case "180 days":
+                result = new Date(startDate.setMonth(startDate.getMonth() + 6));
+                break;
+            case "365 days":
+                result = new Date(startDate.setFullYear(startDate.getFullYear() + 1));
+                break;
+            default:
+                console.error("Error with timePeriod");
+                return "";
         }
-    
+
         const year = result.getFullYear();
         const month = String(result.getMonth() + 1).padStart(2, "0");
         const day = String(result.getDate()).padStart(2, "0");
-    
-        return `${year}-${month}-${day}`;
-      };
 
-    const [endDate, setEndDate] = useState(() =>
-        calculateEndDate(startDate, timePeriod)
-    );
+        return `${year}-${month}-${day}`;
+    };
+
+    const getDefaultEndDate = () => {
+        const today = new Date();
+        const firstDayOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+        const year = firstDayOfCurrentMonth.getFullYear();
+        const month = String(firstDayOfCurrentMonth.getMonth() + 1).padStart(2, "0");
+        const day = String(firstDayOfCurrentMonth.getDate()).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+    };
+
+    const [endDate, setEndDate] = useState(() => getDefaultEndDate());
 
     const daysDifference = (days: number) => {
         if (!isStartingDateSelected) return false;
@@ -125,8 +134,7 @@ export default function Page() {
                     calculateEndDate(startDate, timePeriod);
                     const rates = await getExchangeRate(selectedCurrency, currency2, startDate, endDate); {/* Tutaj zmienic */}
                     setExchangeRates(rates);
-                }
-                else {
+                } else {
                     throw String(isStartingDateSelected + " " + isTimePeriodSelected);
                 }
             } catch (error) {
@@ -156,64 +164,64 @@ export default function Page() {
                     <div className="w-64">
                         <label className="text-xs font-bold">From</label>
                         <div className="relative">
-                        {loading ? (
-                            <p>Loading currencies...</p>
+                            {loading ? (
+                                <p>Loading currencies...</p>
                             ) : (
-                            <>
-                                <select
-                                id="currency"
-                                className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
-                                value={selectedCurrency}
-                                onChange={handleCurrencyChange}
-                                >
-                                {currencies.map((currency) => (
-                                    <option key={currency.code} value={currency.code}>
-                                    {currency.code} - {currency.name}
-                                    </option>
-                                ))}
-                                </select>
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                <svg
-                                    className="fill-current h-4 w-4"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
-                                    <path d="M7 10l5 5 5-5H7z" />
-                                </svg>
-                                </div>
-                            </>
+                                <>
+                                    <select
+                                        id="currency"
+                                        className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
+                                        value={selectedCurrency}
+                                        onChange={handleCurrencyChange}
+                                    >
+                                        {currencies.map((currency) => (
+                                            <option key={currency.code} value={currency.code}>
+                                                {currency.code} - {currency.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <svg
+                                            className="fill-current h-4 w-4"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path d="M7 10l5 5 5-5H7z" />
+                                        </svg>
+                                    </div>
+                                </>
                             )}
                         </div>
                     </div>
                     <div className="w-64">
                         <label className="text-xs font-bold">To</label>
                         <div className="relative">
-                        {loading ? (
-                            <p>Loading currencies...</p>
+                            {loading ? (
+                                <p>Loading currencies...</p>
                             ) : (
-                            <>
-                                <select
-                                id="currency"
-                                className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
-                                value={currency2}
-                                onChange={handleCurrency2Change}
-                                >
-                                {currencies.map((currency) => (
-                                    <option key={currency.code} value={currency.code}>
-                                    {currency.code} - {currency.name}
-                                    </option>
-                                ))}
-                                </select>
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                <svg
-                                    className="fill-current h-4 w-4"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
-                                    <path d="M7 10l5 5 5-5H7z" />
-                                </svg>
-                                </div>
-                            </>
+                                <>
+                                    <select
+                                        id="currency"
+                                        className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
+                                        value={currency2}
+                                        onChange={handleCurrency2Change}
+                                    >
+                                        {currencies.map((currency) => (
+                                            <option key={currency.code} value={currency.code}>
+                                                {currency.code} - {currency.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <svg
+                                            className="fill-current h-4 w-4"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path d="M7 10l5 5 5-5H7z" />
+                                        </svg>
+                                    </div>
+                                </>
                             )}
                         </div>
                     </div>
@@ -230,23 +238,23 @@ export default function Page() {
                                 onChange={handleStartDateChange}
                                 className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Start Date"
-                                max ={getMaxDate()}
+                                max={getMaxDate()}
                             />
                         </div>
                         <div className="relative w-40">
-                                <label
-                                    htmlFor="time-period"
-                                    className="block text-gray-700 text-xs font-bold mb-2"
-                                >
-                                    Time period
-                                </label>
+                            <label
+                                htmlFor="time-period"
+                                className="block text-gray-700 text-xs font-bold mb-2"
+                            >
+                                Time period
+                            </label>
                             
                             <div className="relative">
                                 <select
                                     className="h-10 block appearance-none w-full bg-white border border-gray_for_text px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
                                     onChange={handleTimePeriodChange}
                                     value={isTimePeriodSelected ? timePeriod : "Switch period"}
-                                    >
+                                >
                                     <option disabled selected hidden>
                                         Switch period
                                     </option>

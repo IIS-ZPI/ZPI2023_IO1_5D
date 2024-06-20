@@ -1,10 +1,11 @@
 import { expect, test } from 'vitest';
 import { getDefaultStartingDate, calculateEndDate, daysDifference, getMaxDate } from '../utils/dateUtils';
 
-test('getDefaultStartingDate returns a date string one month ago from today', () => {
+test('getDefaultStartingDate returns a date string of the first day of the previous month', () => {
   const today = new Date();
-  const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
-  const expectedDate = `${lastMonth.getFullYear()}-${String(lastMonth.getMonth() + 1).padStart(2, '0')}-${String(lastMonth.getDate()).padStart(2, '0')}`;
+  const firstDayOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const firstDayOfPreviousMonth = new Date(firstDayOfCurrentMonth.setMonth(firstDayOfCurrentMonth.getMonth() - 1));
+  const expectedDate = `${firstDayOfPreviousMonth.getFullYear()}-${String(firstDayOfPreviousMonth.getMonth() + 1).padStart(2, '0')}-${String(firstDayOfPreviousMonth.getDate()).padStart(2, '0')}`;
   
   expect(getDefaultStartingDate()).toBe(expectedDate);
 });
@@ -18,6 +19,7 @@ test('calculateEndDate calculates the correct end date based on the time period'
   expect(calculateEndDate(startDate, '90 days')).toBe('2023-04-01');
   expect(calculateEndDate(startDate, '180 days')).toBe('2023-07-01');
   expect(calculateEndDate(startDate, '365 days')).toBe('2024-01-01');
+  expect(calculateEndDate(startDate, 'Switch period')).toBe('2023-02-01');
 });
 
 test('daysDifference returns true if the difference between today and the starting date is greater than or equal to the specified days', () => {
