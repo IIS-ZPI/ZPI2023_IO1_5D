@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from 'react-hot-toast'
 import { useCurrency } from "../contexts/CurrencyProvider";
 import { Statistics, useStatistics } from "../contexts/StatisticsProvider";
 import { getDefaultStartingDate, calculateEndDate, daysDifference, getMaxDate, getDefaultEndDate } from "../utils/dateUtils";
@@ -41,7 +42,13 @@ const StatisticalMeasures: React.FC = () => {
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
-    setSelectedCurrency(e.target.value);
+
+    const newCurrency = e.target.value;
+    
+    if (newCurrency === "PLN")
+      toast.error("You are not able to choose PLN as currency!");
+    else
+      setSelectedCurrency(e.target.value);
   };
 
   const handleStartingDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
