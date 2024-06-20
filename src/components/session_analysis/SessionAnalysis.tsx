@@ -43,6 +43,9 @@ const SessionAnalysis = () => {
 
             <Card
                 className="p-4 mb-6 relative w-full"
+                placeholder={undefined}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
             >
                 <Chart data={value} />
             </Card>
