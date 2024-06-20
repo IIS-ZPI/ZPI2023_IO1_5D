@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCurrency } from "../contexts/CurrencyProvider";
 import { Statistics, useStatistics } from "../contexts/StatisticsProvider";
-import { getDefaultStartingDate, calculateEndDate, daysDifference, getMaxDate } from "../utils/dateUtils";
+import { getDefaultStartingDate, calculateEndDate, daysDifference, getMaxDate, getDefaultEndDate } from "../utils/dateUtils";
 
 const StatisticalMeasures: React.FC = () => {
   const {
@@ -19,10 +19,11 @@ const StatisticalMeasures: React.FC = () => {
 
   const [timePeriod, setTimePeriod] = useState("Switch period");
   const [isTimePeriodSelected, setIsTimePeriodSelected] = useState(false);
-  const [endDate, setEndDate] = useState(() => calculateEndDate(startingDate, timePeriod));
+  const [endDate, setEndDate] = useState(() => getDefaultEndDate());
 
   useEffect(() => {
     if (isStartingDateSelected !== isTimePeriodSelected) return;
+    
     const fetchStatistics = async () => {
       setLoading(true);
       try {
