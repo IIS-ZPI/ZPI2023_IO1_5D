@@ -71,6 +71,10 @@ const CurrencyBarSection: React.FC<CurrencyBarSectionProps> = ({
             setSelectedCurrency(newCurrency);
     };
 
+    if (selectedCurrency === "PLN") {
+        setSelectedCurrency("EUR");
+    }
+
     return (
         <div className="w-full">
             <div className="flex justify-between items-center mb-4 border-b-2 border-gray_for_text">

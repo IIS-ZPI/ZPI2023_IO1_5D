@@ -80,6 +80,10 @@ const StatisticalMeasures: React.FC = () => {
     setEndDate(calculateEndDate(startingDate, newTimePeriod));
   };
 
+  if (selectedCurrency === "PLN") {
+    setSelectedCurrency("EUR");
+  }
+
   return (
     <div className="w-fill m-16">
       <div className="flex justify-between items-center mb-4 border-b-2 border-gray_for_text">
