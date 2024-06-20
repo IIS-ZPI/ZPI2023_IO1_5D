@@ -1,10 +1,11 @@
 export const getDefaultStartingDate = (): string => {
   const today = new Date();
-  const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
+  const firstDayOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const firstDayOfPreviousMonth = new Date(firstDayOfCurrentMonth.setMonth(firstDayOfCurrentMonth.getMonth() - 1));
 
-  const year = lastMonth.getFullYear();
-  const month = String(lastMonth.getMonth() + 1).padStart(2, "0");
-  const day = String(lastMonth.getDate()).padStart(2, "0");
+  const year = firstDayOfPreviousMonth.getFullYear();
+  const month = String(firstDayOfPreviousMonth.getMonth() + 1).padStart(2, "0");
+  const day = String(firstDayOfPreviousMonth.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
 };
@@ -58,5 +59,16 @@ export const getMaxDate = (): string => {
   const year = maxDate.getFullYear();
   const month = String(maxDate.getMonth() + 1).padStart(2, "0");
   const day = String(maxDate.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+export const getDefaultEndDate = (): string => {
+  const today = new Date();
+  const firstDayOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  const year = firstDayOfCurrentMonth.getFullYear();
+  const month = String(firstDayOfCurrentMonth.getMonth() + 1).padStart(2, "0");
+  const day = String(firstDayOfCurrentMonth.getDate()).padStart(2, "0");
+
   return `${year}-${month}-${day}`;
 };
