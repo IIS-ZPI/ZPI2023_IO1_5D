@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from 'react-hot-toast'
 import { useCurrency } from "../../../contexts/CurrencyProvider";
 import { useExchangeRate } from "../../../contexts/ExchangeRateProvider";
 import "./page.css";
@@ -31,11 +32,21 @@ export default function Page() {
     const [startDate, setStartDate] = useState(() => getDefaultStartingDate());
 
     const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedCurrency(e.target.value);
+        const newCurrency = e.target.value;
+
+        if (newCurrency === currency2)
+            toast.error("You cannot choose two identical currencies!");
+        else
+            setSelectedCurrency(e.target.value);
     };
 
     const handleCurrency2Change = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setCurrency2(e.target.value);
+        const newCurrency2 = e.target.value;
+
+        if (newCurrency2 === selectedCurrency)
+            toast.error("You cannot choose two identical currencies!");
+        else
+            setCurrency2(e.target.value);
     };
 
     const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
