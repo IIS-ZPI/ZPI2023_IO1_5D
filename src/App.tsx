@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Toaster } from 'react-hot-toast'
 import Flags from "./assets/flags.png";
 import ChangeDistribution from "./components/change-distribution/ChangeDistribution";
 import Dashboard from "./components/Dashboard";
@@ -52,6 +53,9 @@ const App: React.FC = () => {
           </Router>
         </StatisticsProvider>
       </CurrencyProvider>
+
+      <Toaster />
+
     </div>
   );
 };
