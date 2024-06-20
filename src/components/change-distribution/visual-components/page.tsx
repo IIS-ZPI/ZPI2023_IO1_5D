@@ -130,15 +130,9 @@ export default function Page() {
     useEffect(() => {
         const updateExchangeRate = async () => {
             try {
-                if (isStartingDateSelected === isTimePeriodSelected) {
+                if(isStartingDateSelected === isTimePeriodSelected) {
                     calculateEndDate(startDate, timePeriod);
-                    console.log("Fetching exchange rates with params:", {
-                        selectedCurrency,
-                        currency2,
-                        startDate,
-                        endDate,
-                    });
-                    const rates = await getExchangeRate(selectedCurrency, currency2, startDate, endDate);
+                    const rates = await getExchangeRate(selectedCurrency, currency2, startDate, endDate); {/* Tutaj zmienic */}
                     setExchangeRates(rates);
                 } else {
                     throw String(isStartingDateSelected + " " + isTimePeriodSelected);
