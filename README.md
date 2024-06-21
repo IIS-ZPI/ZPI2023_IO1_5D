@@ -25,12 +25,16 @@ Available on: [iis-zpi.github.io/ZPI2023_IO1_5D](https://iis-zpi.github.io/ZPI20
 
 Available on: [github.com/orgs/IIS-ZPI/projects/18](https://github.com/orgs/IIS-ZPI/projects/18)
 
-## CI System
+## CI/CD System
 
 We use GitHub Actions to test if project builds successfully after every new Pull Request on branches: `main`, `release` and `develop`. Also after successful merge to `release` branch project is automatically deploying live.
 
 Workflow scripts you can find in: `.github/workflows` in project files.
 
-## CI Raports
+## CI/CD Raports
 
 Available on: [github.com/IIS-ZPI/ZPI2023_IO1_5D/actions](https://github.com/IIS-ZPI/ZPI2023_IO1_5D/actions)
+
+## Documentation
+
+You can find it in `./docs`
